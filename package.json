@@ -1,18 +1,12 @@
 {
   "name": "bkwedding-card",
   "version": "1.0.0",
-  "private": true,
-  "description": "E-Wedding Card for Beau & Kim (#BeauKimEverAfter)",
+  "description": "E-Wedding Card for Beau & Kim",
   "scripts": {
-    "dev": "node server.js",
-    "start": "node server.js",
-    "serve": "node server.js"
+    "build": "echo 'Static site ready'",
+    "dev": "node server.js"
   },
-  "keywords": [
-    "wedding",
-    "invitation",
-    "e-card"
-  ],
-  "author": "Antigravity",
-  "license": "MIT"
+  "keywords": [],
+  "author": "Mootu",
+  "license": "ISC"
 }
