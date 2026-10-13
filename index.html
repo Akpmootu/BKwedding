@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <title>Wedding Invitation | Beau & Kim</title>
+  
+  <!-- SEO & Open Graph Meta Tags -->
+  <meta name="description" content="ขอเรียนเชิญเป็นเกียรติร่วมงานฉลองมงคลสมรส Beau & Kim #BeauKimEverAfter วันศุกร์ที่ 20 พฤศจิกายน 2569 ณ โรงแรมคริสตัล หาดใหญ่">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Beau & Kim | E-Wedding Card">
+  <meta property="og:description" content="ขอเรียนเชิญร่วมงานพิธีมงคลสมรส Beau & Kim #BeauKimEverAfter วันศุกร์ที่ 20 พฤศจิกายน 2569">
+  <meta property="og:image" content="assets/images/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="assets/images/og-image.jpg">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
+
+  <!-- Font Awesome 6 Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="scroll-locked">
+
+  <!-- Canvas Effect for Falling Rose Petals -->
+  <canvas id="petals-canvas" aria-hidden="true"></canvas>
+
+  <!-- Audio Element for Local Background Music -->
+  <audio id="wedding-audio" preload="auto" loop>
+    <source src="assets/music/enchanted.mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- Hidden Container for YouTube Background Audio Fallback -->
+  <div id="youtube-audio-container" style="position:fixed;top:-9999px;left:-9999px;opacity:0;pointer-events:none;" aria-hidden="true"></div>
+
+  <!-- Toast Notification Box -->
+  <div id="toast-notice" class="toast-notice" role="alert" aria-live="polite">
+    <i class="fa-solid fa-circle-check"></i>
+    <span id="toast-text">คัดลอกเรียบร้อยแล้ว</span>
+  </div>
+
+  <!-- Floating Controls (Language Switcher & Music Player) -->
+  <aside class="floating-controls" aria-label="Quick Controls">
+    <button id="lang-switch-btn" class="lang-switch-btn" title="เปลี่ยนภาษา / Switch Language" aria-label="Switch Language">
+      <i class="fa-solid fa-globe"></i>
+      <span id="lang-label">TH / EN</span>
+    </button>
+    <button id="music-floating-btn" class="music-floating-btn" title="เปิด/ปิดเพลง" aria-label="Toggle Music">
+      <i class="fa-solid fa-music"></i>
+    </button>
+  </aside>
+
+  <!-- ========================================================================
+       1. ENVELOPE / OPENING SCREEN (หน้าแรก/หน้าปกการ์ดเชิญ: S__122060825_0.jpg)
+       ======================================================================== -->
+  <div id="envelope-screen" class="envelope-screen" role="dialog" aria-modal="true" aria-label="Wedding Envelope">
+    <!-- Immersive Fullscreen Cover using S__122060825_0.jpg -->
+    <div class="envelope-cover-bg" style="background-image: url('assets/images/cover.jpg');">
+      <div class="envelope-cover-overlay"></div>
+    </div>
+    
+    <div class="envelope-wrapper">
+      <!-- Top Decorative Ribbon/Ornament -->
+      <svg class="envelope-ornament-top" viewBox="0 0 160 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M10 20C40 5 60 35 80 20C100 5 120 35 150 20" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+        <circle cx="80" cy="20" r="4" fill="currentColor"/>
+        <path d="M72 15C76 10 84 10 88 15" stroke="currentColor" stroke-width="1.2"/>
+      </svg>
+
+      <!-- Guest Name Box (Extracted from ?to=...) -->
+      <div class="envelope-recipient-box">
+        <div class="envelope-recipient-label" data-i18n="envRecipientLabel">DEAR GUEST</div>
+        <div id="envelope-guest-name" class="envelope-recipient-name">เรียนแขกผู้มีเกียรติ</div>
+      </div>
+
+      <div class="envelope-monogram" id="env-monogram">B &amp; K</div>
+      <div class="envelope-subtext" data-i18n="envInvitationTag">Wedding Invitation</div>
+      <div class="envelope-hashtag" id="env-hashtag">#BeauKimEverAfter</div>
+
+      <!-- Wax Seal Button to Open Card & Play Music -->
+      <div class="wax-seal-wrapper">
+        <span class="wax-seal-pulse" aria-hidden="true"></span>
+        <button id="wax-seal-btn" class="wax-seal-btn" aria-label="แตะเพื่อเปิดการ์ดเชิญ">
+          <i class="fa-solid fa-envelope-open-text wax-seal-icon"></i>
+          <span class="wax-seal-text">OPEN</span>
+        </button>
+      </div>
+
+      <p class="envelope-instruction" data-i18n="envTapToOpen">แตะเพื่อเปิดการ์ดเชิญ</p>
+      <p class="envelope-instruction-sub">TAP TO OPEN INVITATION</p>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       MAIN CARD CONTENT (CONTAINER)
+       ======================================================================== -->
+  <main id="main-content" class="main-wrapper" style="opacity: 0; pointer-events: none; transition: opacity 0.8s ease;">
+    
+    <!-- 2. SECTION 1: INVITATION CARD BACK (S__122060826_0.jpg - หน้าแรกหลังเปิดการ์ด) -->
+    <section id="card-hero" class="section-block" style="padding-top: 2rem;">
+      <div class="card-presentation-wrapper fade-up">
+        <div class="card-frame-outer">
+          <div class="card-frame-inner">
+            <img id="invitation-card-img" src="assets/images/card-back.jpg" alt="การ์ดเชิญพิธีมงคลสมรส Beau & Kim" class="invitation-card-real">
+          </div>
+        </div>
+        <div class="card-action-bar">
+          <button id="btn-zoom-card" class="btn-card-action" aria-label="แตะเพื่อดูการ์ดขนาดเต็ม">
+            <i class="fa-solid fa-magnifying-glass-plus"></i> <span data-i18n="btnZoomCard">แตะเพื่อดูการ์ดขนาดเต็ม</span>
+          </button>
+        </div>
+        <div class="hero-hashtag-wrap">
+          <span class="hero-hashtag" id="hero-hashtag" title="คลิกเพื่อคัดลอกแฮชแท็ก">
+            <i class="fa-solid fa-hashtag"></i><span id="hero-hashtag-text">#BeauKimEverAfter</span>
+          </span>
+        </div>
+      </div>
+    </section>
+
+    <!-- RANDOM DIVIDER 1 -->
+    <div class="random-image-divider">
+      <div class="divider-parallax-bg" style="background-image: url('assets/images/dividers/divider-1.jpg');"></div>
+      <div class="divider-overlay"></div>
+    </div>
+
+    <!-- 3. SECTION COUNTDOWN & CALENDAR (นับถอยหลังถึง 20 พ.ย. 2569 + ปุ่ม Calendar) -->
+    <section id="countdown-sec" class="section-block">
+      <div class="luxury-card fade-up">
+        <div class="card-header-icon">
+          <i class="fa-regular fa-calendar-check"></i>
+        </div>
+
+        <h2 class="section-title font-serif">Save The Date</h2>
+        <div class="date-display-badge">
+          <p class="date-th">วันศุกร์ที่ 20 พฤศจิกายน พ.ศ. 2569</p>
+          <p class="date-en">Friday, 20 November 2026</p>
+        </div>
+
+        <!-- COUNTDOWN (วัน : ชั่วโมง : นาที) -->
+        <div class="countdown-box" id="countdown-box">
+          <p class="countdown-title" data-i18n="countdownTitle">COUNTDOWN TO OUR SPECIAL DAY</p>
+          <div class="countdown-grid">
+            <div class="countdown-card">
+              <span id="cd-days" class="countdown-num">00</span>
+              <span class="countdown-label" data-i18n="cdDays">วัน</span>
+            </div>
+            <div class="countdown-card">
+              <span id="cd-hours" class="countdown-num">00</span>
+              <span class="countdown-label" data-i18n="cdHours">ชั่วโมง</span>
+            </div>
+            <div class="countdown-card">
+              <span id="cd-minutes" class="countdown-num">00</span>
+              <span class="countdown-label" data-i18n="cdMinutes">นาที</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Calendar Integration Buttons (ย้ายมาใส่ใน Countdown Section ตามคำขอ) -->
+        <div class="calendar-action-group">
+          <a id="btn-google-cal" href="#" target="_blank" rel="noopener noreferrer" class="btn-luxury btn-rose">
+            <i class="fa-brands fa-google"></i>
+            <span data-i18n="btnGoogleCalendar">บันทึกลง Google Calendar</span>
+          </a>
+          <button id="btn-download-ics" class="btn-luxury btn-outline">
+            <i class="fa-solid fa-calendar-plus"></i>
+            <span data-i18n="btnDownloadIcs">ดาวน์โหลดปฏิทิน (.ics สำหรับ iPhone)</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- RANDOM DIVIDER 2 -->
+    <div class="random-image-divider">
+      <div class="divider-parallax-bg" style="background-image: url('assets/images/dividers/divider-2.jpg');"></div>
+      <div class="divider-overlay"></div>
+    </div>
+
+    <!-- 4. SECTION SCHEDULE TIMELINE (สไตล์ Journey to Marriage ตาม 9.png) -->
+    <section id="schedule" class="section-block alt-bg">
+      <div class="luxury-card fade-up">
+        <!-- Decorative SVG Bow Ribbon matching 9.png -->
+        <svg class="journey-bow-header" viewBox="0 0 160 80" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M80 35C70 15 45 15 35 30C25 45 45 60 75 42L80 40L85 42C115 60 135 45 125 30C115 15 90 15 80 35Z" fill="#F8D8E8" stroke="#EB7FA8" stroke-width="2"/>
+          <path d="M75 42C65 55 50 75 35 78M85 42C95 55 110 75 125 78" stroke="#EB7FA8" stroke-width="2.5" stroke-linecap="round"/>
+          <circle cx="80" cy="38" r="7" fill="#EE3C8E"/>
+        </svg>
+
+        <h2 class="journey-title" data-i18n="scheduleTitle">Wedding Schedule</h2>
+        <div class="journey-couple-script" id="journey-couple-names">Beau &amp; Kim</div>
+        <p class="section-subtitle" data-i18n="scheduleSubtitle">กำหนดการและเรื่องราววันสำคัญ</p>
+
+        <!-- Vertical Timeline in Journey Style -->
+        <div class="journey-timeline" id="schedule-timeline-container">
+          <!-- Rendered dynamically from config.js -->
+        </div>
+      </div>
+    </section>
+
+    <!-- RANDOM DIVIDER 3 -->
+    <div class="random-image-divider">
+      <div class="divider-parallax-bg" style="background-image: url('assets/images/dividers/divider-3.jpg');"></div>
+      <div class="divider-overlay"></div>
+    </div>
+
+    <!-- 5. SECTION VENUE & LOCATION (ใช้แค่ Google Maps ตามคำขอ) -->
+    <section id="location" class="section-block">
+      <div class="luxury-card fade-up">
+        <div class="card-header-icon">
+          <i class="fa-solid fa-map-location-dot"></i>
+        </div>
+
+        <h2 class="section-title" data-i18n="venueTitle">Wedding Venue</h2>
+        <p class="section-subtitle" data-i18n="venueSubtitle">สถานที่จัดงานและแผนที่การเดินทาง</p>
+
+        <div class="venue-details-card">
+          <h3 class="venue-name-bold" id="venue-hall-name"></h3>
+          <p class="venue-hotel-name" id="venue-hotel-name"></p>
+          <p class="venue-address-text" id="venue-address"></p>
+        </div>
+
+        <!-- Embedded Google Maps -->
+        <div class="map-container">
+          <iframe id="map-iframe" src="" loading="lazy" allowfullscreen title="Crystal Hotel Hat Yai Map"></iframe>
+        </div>
+
+        <!-- Single Google Maps Button -->
+        <div class="map-buttons-group">
+          <a id="btn-google-maps" href="#" target="_blank" rel="noopener noreferrer" class="btn-luxury btn-sage">
+            <i class="fa-solid fa-location-arrow"></i>
+            <span data-i18n="btnNavGoogleMaps">เปิดแผนที่ Google Maps</span>
+          </a>
+        </div>
+
+        <div class="venue-note">
+          <i class="fa-solid fa-square-parking"></i>
+          <span id="venue-parking-note"></span>
+        </div>
+      </div>
+    </section>
+
+    <!-- RANDOM DIVIDER 4 -->
+    <div class="random-image-divider">
+      <div class="divider-parallax-bg" style="background-image: url('assets/images/dividers/divider-4.jpg');"></div>
+      <div class="divider-overlay"></div>
+    </div>
+
+    <!-- 6. SECTION DRESS CODE (6 เฉดสี เขียว 3 + ชมพู 3) -->
+    <section id="dresscode" class="section-block alt-bg">
+      <div class="luxury-card fade-up">
+        <div class="card-header-icon">
+          <i class="fa-solid fa-shirt"></i>
+        </div>
+
+        <h2 class="section-title" data-i18n="dressCodeTitle">Dress Code</h2>
+        <p class="section-subtitle" data-i18n="dressCodeSubtitle">ธีมสีสำหรับแขกผู้มีเกียรติ</p>
+        <p class="dresscode-desc" id="dresscode-desc"></p>
+        <p class="dresscode-note" id="dresscode-note"></p>
+
+        <!-- 6 Swatches (3 Green + 3 Pink) -->
+        <div class="swatches-grid" id="dresscode-grid">
+          <!-- Rendered dynamically from config.js -->
+        </div>
+
+        <p style="font-size: 0.78rem; color: var(--text-muted);" data-i18n="swatchClickHint">
+          * แตะที่เฉดสีเพื่อคัดลอกรหัสสี (HEX Code)
+        </p>
+      </div>
+    </section>
+
+    <!-- RANDOM DIVIDER 5 -->
+    <div class="random-image-divider">
+      <div class="divider-parallax-bg" style="background-image: url('assets/images/dividers/divider-5.jpg');"></div>
+      <div class="divider-overlay"></div>
+    </div>
+
+    <!-- 7. SECTION PRE-WEDDING GALLERY (กดดูรูป / ดาวน์โหลด / กดไลค์ / คอมเมนต์) -->
+    <section id="gallery" class="section-block">
+      <div class="luxury-card fade-up">
+        <div class="card-header-icon">
+          <i class="fa-regular fa-images"></i>
+        </div>
+
+        <h2 class="section-title" data-i18n="galleryTitle">Pre-Wedding Gallery</h2>
+        <p class="section-subtitle" data-i18n="gallerySubtitle">ภาพความทรงจำอันแสนอบอุ่น (แตะรูปเพื่อดูขนาดเต็ม)</p>
+
+        <!-- Gallery Grid (22 รูปจาก pre-wedding) -->
+        <div class="gallery-grid" id="gallery-grid-container">
+          <!-- Rendered dynamically from config.js -->
+        </div>
+
+        <a id="btn-drive-gallery" href="#" target="_blank" rel="noopener noreferrer" class="btn-luxury btn-outline">
+          <i class="fa-brands fa-google-drive"></i>
+          <span data-i18n="btnViewAllDrive">ชมภาพทั้งหมดบน Google Drive</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- 8. SECTION RSVP (แบบตอบรับคำเชิญ) -->
+    <section id="rsvp" class="section-block alt-bg">
+      <div class="luxury-card fade-up">
+        <div class="card-header-icon">
+          <i class="fa-regular fa-envelope-open"></i>
+        </div>
+
+        <h2 class="section-title">RSVP</h2>
+        <p class="section-subtitle" data-i18n="rsvpSubtitle">แบบตอบรับการเข้าร่วมงาน</p>
+
+        <div id="rsvp-closed-notice" class="form-closed-alert" style="display: none;">
+          <i class="fa-solid fa-circle-exclamation"></i>
+          <span data-i18n="rsvpDeadlinePassed">ขออภัย ได้ปิดรับการตอบรับแบบออนไลน์แล้ว หากต้องการประสานงาน กรุณาติดต่อผู้ประสานงานโดยตรง</span>
+        </div>
+
+        <form id="rsvp-form" class="rsvp-form">
+          <!-- Guest Full Name -->
+          <div class="form-group">
+            <label for="rsvp-name" class="form-label">
+              <span data-i18n="formNameLabel">ชื่อ - นามสกุล</span> <span class="required">*</span>
+            </label>
+            <input type="text" id="rsvp-name" name="name" class="form-control" placeholder="กรุณาระบุชื่อ-นามสกุลของท่าน" required>
+          </div>
+
+          <!-- Phone Number -->
+          <div class="form-group">
+            <label for="rsvp-phone" class="form-label">
+              <span data-i18n="formPhoneLabel">เบอร์โทรศัพท์</span> <span class="required">*</span>
+            </label>
+            <input type="tel" id="rsvp-phone" name="phone" class="form-control" placeholder="08X-XXX-XXXX" required>
+          </div>
+
+          <!-- Attendance Status -->
+          <div class="form-group">
+            <label class="form-label">
+              <span data-i18n="formAttendanceLabel">การเข้าร่วมงาน</span> <span class="required">*</span>
+            </label>
+            <div class="choice-cards-row">
+              <label class="choice-card-label selected" id="label-attend-yes">
+                <input type="radio" name="attendance" value="attend" checked>
+                <i class="fa-solid fa-circle-check"></i>
+                <span class="choice-card-text" data-i18n="formAttendYes">ยินดีเข้าร่วมงาน</span>
+              </label>
+              <label class="choice-card-label" id="label-attend-no">
+                <input type="radio" name="attendance" value="cannot_attend">
+                <i class="fa-solid fa-heart-crack"></i>
+                <span class="choice-card-text" data-i18n="formAttendNo">ขอแสดงความยินดี แต่ไม่สะดวก</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Followers Counter -->
+          <div id="followers-group" class="form-group">
+            <label class="form-label" data-i18n="formFollowersLabel">จำนวนผู้ติดตาม (ไม่รวมตัวท่าน)</label>
+            <div class="counter-box">
+              <button type="button" id="btn-follower-minus" class="counter-btn" aria-label="ลดจำนวนผู้ติดตาม">-</button>
+              <input type="number" id="followers-count" name="followers" value="0" min="0" max="5" readonly class="counter-val">
+              <button type="button" id="btn-follower-plus" class="counter-btn" aria-label="เพิ่มจำนวนผู้ติดตาม">+</button>
+            </div>
+          </div>
+
+          <!-- Guest Side -->
+          <div class="form-group">
+            <label class="form-label" data-i18n="formSideLabel">ฝ่ายแขกผู้มีเกียรติ</label>
+            <div class="choice-cards-row">
+              <label class="choice-card-label selected" id="label-side-bride">
+                <input type="radio" name="side" value="ฝ่ายเจ้าสาว" checked>
+                <i class="fa-solid fa-person-dress"></i>
+                <span class="choice-card-text" data-i18n="formSideBride">แขกฝ่ายเจ้าสาว (โบ)</span>
+              </label>
+              <label class="choice-card-label" id="label-side-groom">
+                <input type="radio" name="side" value="ฝ่ายเจ้าบ่าว">
+                <i class="fa-solid fa-person"></i>
+                <span class="choice-card-text" data-i18n="formSideGroom">แขกฝ่ายเจ้าบ่าว (คิม)</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Dietary Restrictions -->
+          <div class="form-group">
+            <label for="rsvp-diet" class="form-label" data-i18n="formDietLabel">อาหารที่แพ้ / มังสวิรัติ (ถ้ามี)</label>
+            <input type="text" id="rsvp-diet" name="diet" class="form-control" placeholder="เช่น แพ้อาหารทะเล, ทานมังสวิรัติ">
+          </div>
+
+          <!-- Warm Wishes to Couple -->
+          <div class="form-group">
+            <label for="rsvp-wishes" class="form-label" data-i18n="formWishesLabel">ข้อความอวยพรถึงคู่บ่าวสาว</label>
+            <textarea id="rsvp-wishes" name="wishes" class="form-control" placeholder="เขียนข้อความอวยพรสั้นๆ ถึงโบและคิม..."></textarea>
+          </div>
+
+          <!-- Submit Button -->
+          <button type="submit" id="btn-submit-rsvp" class="btn-luxury btn-rose" style="width: 100%; max-width: 100%;">
+            <i class="fa-solid fa-paper-plane"></i>
+            <span id="btn-submit-text" data-i18n="btnSubmitRsvp">ส่งแบบตอบรับ</span>
+          </button>
+
+          <!-- Status Feedback -->
+          <div id="rsvp-status-box" class="form-status-msg"></div>
+        </form>
+      </div>
+    </section>
+
+    <!-- 9. SECTION GUESTBOOK (สมุดอวยพร) -->
+    <section id="guestbook" class="section-block">
+      <div class="luxury-card fade-up">
+        <div class="card-header-icon">
+          <i class="fa-solid fa-pen-nib"></i>
+        </div>
+
+        <h2 class="section-title" data-i18n="guestbookTitle">Guestbook</h2>
+        <p class="section-subtitle" data-i18n="guestbookSubtitle">คำอวยพรจากแขกผู้มีเกียรติ</p>
+
+        <div class="wishes-carousel" id="wishes-carousel-container">
+          <!-- Rendered dynamically -->
+        </div>
+
+        <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.5rem;" data-i18n="guestbookHint">
+          * ส่งคำอวยพรได้ผ่านแบบฟอร์ม RSVP หรือปุ่มส่งของขวัญ
+        </p>
+      </div>
+    </section>
+
+    <!-- 10. SECTION SPECIAL GIFT (ซองดิจิทัล + อัปโหลดสลิป & คำอวยพร) -->
+    <section id="gift" class="section-block alt-bg">
+      <div class="luxury-card fade-up">
+        <div class="card-header-icon">
+          <i class="fa-solid fa-gift"></i>
+        </div>
+
+        <h2 class="section-title">Special Gift</h2>
+        <p class="section-subtitle" data-i18n="giftSubtitle">ร่วมแสดงความยินดีผ่านช่องทางออนไลน์</p>
+
+        <button id="btn-open-gift-modal" class="gift-teaser-btn" aria-label="เปิดดูข้อมูลของขวัญและพร้อมเพย์">
+          <i class="fa-solid fa-gift"></i>
+          <span>CLICK HERE</span>
+        </button>
+
+        <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 1rem;" data-i18n="giftTeaserHint">
+          แตะเพื่อดู QR Code พร้อมเพย์ และส่งของขวัญ/แนบสลิป
+        </p>
+      </div>
+    </section>
+
+    <!-- 11. SECTION CONTACT US & FOOTER (มีรูปบ่าวสาว + เครดิต Mootu) -->
+    <footer id="contact" class="section-block">
+      <div class="luxury-card fade-up">
+        <div class="card-header-icon">
+          <i class="fa-solid fa-phone"></i>
+        </div>
+
+        <h2 class="section-title" data-i18n="contactTitle">Contact Us</h2>
+        <p class="section-subtitle" data-i18n="contactSubtitle">ติดต่อสอบถามข้อมูลเพิ่มเติม</p>
+
+        <!-- Contact Grid with Bride & Groom Portrait Photos -->
+        <div class="contact-grid" id="contact-grid-container">
+          <!-- Rendered dynamically with bride & groom photos from config.js -->
+        </div>
+
+        <div class="apology-box" data-i18n="apologyText">
+          (ขออภัยหากมิได้เรียนเชิญด้วยตนเอง)
+        </div>
+
+        <div class="footer-credits">
+          <p><strong id="footer-names">Beau &amp; Kim Wedding</strong></p>
+          <p id="footer-date">20 November 2026</p>
+          <p style="margin-top: 6px; font-size: 0.75rem; color: var(--text-muted);">#BeauKimEverAfter</p>
+
+          <!-- เครดิตผู้จัดทำแบบเนียนๆ Powered by. Mootu -->
+          <div class="mootu-credit">
+            <a href="https://www.facebook.com/Mootu00/" target="_blank" rel="noopener noreferrer">
+              powered by.mootu
+            </a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+  </main>
+
+  <!-- ========================================================================
+       MODALS & LIGHTBOXES
+       ======================================================================== -->
+  
+  <!-- SPECIAL GIFT MODAL (QR CODE + UPLOAD SLIP FORM) -->
+  <div id="gift-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="gift-modal-title">
+    <div class="modal-card">
+      <button id="btn-close-gift-modal" class="modal-close-btn" aria-label="ปิดหน้าต่าง">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+      <div class="card-header-icon" style="margin-bottom: 0.6rem;">
+        <i class="fa-solid fa-qrcode"></i>
+      </div>
+
+      <h3 id="gift-modal-title" style="font-family: var(--font-serif); font-size: 1.4rem; color: var(--text-primary);">
+        Special Gift &amp; PromptPay
+      </h3>
+      <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem;" data-i18n="giftModalDesc">
+        สแกน QR Code หรือโอนเงินร่วมแสดงความยินดี
+      </p>
+
+      <div class="gift-qr-frame">
+        <img id="gift-qr-img" src="assets/images/qr-promptpay.jpg" alt="พร้อมเพย์ QR Code">
+      </div>
+
+      <div class="gift-bank-info">
+        <div class="gift-bank-name" id="gift-bank-name">ธนาคารกรุงศรีอยุธยา (BAY)</div>
+        <div class="gift-acc-name" id="gift-acc-name">น.ส. ณัฐฐิญา มณีโชคชูโรจน์</div>
+        <div class="gift-promptpay-num" id="gift-promptpay-num">1-9098-00774-90-4</div>
+      </div>
+
+      <div style="display:flex; gap:0.6rem; justify-content:center; margin-bottom:1.5rem;">
+        <button id="btn-copy-promptpay" class="btn-luxury btn-rose" style="flex:1; padding:0.75rem 1rem;">
+          <i class="fa-regular fa-copy"></i>
+          <span data-i18n="btnCopyPromptPay">คัดลอกเลขพร้อมเพย์</span>
+        </button>
+        <a id="btn-download-qr" href="assets/images/qr-promptpay.jpg" download="BeauKim_PromptPay_QR.jpg" class="btn-luxury btn-outline" style="flex:1; padding:0.75rem 1rem;">
+          <i class="fa-solid fa-download"></i>
+          <span data-i18n="btnDownloadQr">บันทึกรูป QR</span>
+        </a>
+      </div>
+
+      <!-- FORM UPLOAD SLIP & SEND BLESSING -->
+      <div class="slip-upload-section">
+        <h4 class="slip-title">
+          <i class="fa-solid fa-receipt"></i> แจ้งการโอนเงิน &amp; ส่งคำอวยพร
+        </h4>
+        <form id="slip-upload-form">
+          <div class="form-group" style="text-align: left; margin-bottom: 0.8rem;">
+            <label for="slip-sender-name" class="form-label" style="font-size: 0.85rem;">ชื่อผู้โอน / ผู้ร่วมอวยพร <span class="required">*</span></label>
+            <input type="text" id="slip-sender-name" name="name" class="form-control" placeholder="ระบุชื่อของท่าน" required>
+          </div>
+          <div class="form-group" style="text-align: left; margin-bottom: 0.8rem;">
+            <label for="slip-amount" class="form-label" style="font-size: 0.85rem;">จำนวนเงิน (บาท) <span style="font-weight:normal;color:#888;">(ไม่บังคับ)</span></label>
+            <input type="number" id="slip-amount" name="amount" class="form-control" placeholder="เช่น 1,000">
+          </div>
+          <div class="form-group" style="text-align: left; margin-bottom: 0.8rem;">
+            <label for="slip-file" class="form-label" style="font-size: 0.85rem;">แนบรูปภาพสลิปโอนเงิน <span class="required">*</span></label>
+            <input type="file" id="slip-file" name="slipFile" accept="image/*" class="form-control" required>
+            <div id="slip-preview-box" class="slip-preview-container" style="display:none; margin-top: 0.5rem;">
+              <img id="slip-preview-img" src="" alt="สลิปโอนเงิน" style="max-height: 140px; border-radius: 8px; margin: 0 auto; display: block; border: 1px solid #ddd;">
+            </div>
+          </div>
+          <div class="form-group" style="text-align: left; margin-bottom: 1rem;">
+            <label for="slip-message" class="form-label" style="font-size: 0.85rem;">คำอวยพรถึงคู่บ่าวสาว</label>
+            <textarea id="slip-message" name="message" class="form-control" rows="2" placeholder="เขียนคำอวยพรสั้นๆ ถึงโบและคิม"></textarea>
+          </div>
+          <button type="submit" id="btn-submit-slip" class="btn-luxury btn-sage" style="width: 100%;">
+            <i class="fa-solid fa-paper-plane"></i> <span id="slip-submit-text">ส่งสลิป &amp; คำอวยพร</span>
+          </button>
+          <div id="slip-status-box" class="form-status-msg" style="margin-top: 0.8rem;"></div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- GALLERY LIGHTBOX (ซูม / ดาวน์โหลด / ไลค์ / คอมเมนต์) -->
+  <div id="gallery-lightbox" class="lightbox-overlay" role="dialog" aria-modal="true" aria-label="Gallery Lightbox">
+    <button id="btn-close-lightbox" class="lightbox-close" aria-label="Close Lightbox">
+      <i class="fa-solid fa-xmark"></i>
+    </button>
+    <button id="btn-prev-lightbox" class="lightbox-nav-btn prev" aria-label="Previous Photo">
+      <i class="fa-solid fa-chevron-left"></i>
+    </button>
+    <button id="btn-next-lightbox" class="lightbox-nav-btn next" aria-label="Next Photo">
+      <i class="fa-solid fa-chevron-right"></i>
+    </button>
+    
+    <div class="lightbox-content-box">
+      <div class="lightbox-img-wrapper">
+        <img id="lightbox-img" src="" alt="Enlarged gallery photo">
+      </div>
+
+      <!-- Interactive Toolbar (Like, Download, Comments Toggle) -->
+      <div class="lightbox-toolbar">
+        <button id="btn-lightbox-like" class="toolbar-btn like-btn" aria-label="กดไลค์รูปภาพ">
+          <i class="fa-regular fa-heart"></i>
+          <span id="lightbox-like-count" class="like-counter">0</span>
+        </button>
+        <a id="btn-lightbox-download" href="" download class="toolbar-btn" aria-label="ดาวน์โหลดรูปภาพ">
+          <i class="fa-solid fa-download"></i>
+          <span>บันทึกรูป</span>
+        </a>
+        <button id="btn-lightbox-comment-toggle" class="toolbar-btn" aria-label="เปิดคอมเมนต์">
+          <i class="fa-regular fa-comment-dots"></i>
+          <span id="lightbox-comment-count">คอมเมนต์</span>
+        </button>
+      </div>
+
+      <!-- Collapsible Comment Drawer for this Photo -->
+      <div id="lightbox-comment-drawer" class="lightbox-comment-drawer" style="display:none;">
+        <h4 style="font-size:0.95rem; margin-bottom:0.6rem; color:#fff;">
+          <i class="fa-regular fa-comments"></i> ความคิดเห็นต่อรูปนี้
+        </h4>
+        <div id="photo-comments-list" class="photo-comments-list">
+          <!-- Comments rendered dynamically -->
+        </div>
+        <form id="photo-comment-form" class="photo-comment-form">
+          <input type="text" id="pc-name" placeholder="ชื่อของท่าน" required class="pc-input">
+          <div style="display:flex; gap:6px; margin-top:4px;">
+            <input type="text" id="pc-text" placeholder="เขียนความรู้สึกหรืออวยพรรูปนี้..." required class="pc-input" style="flex:1;">
+            <button type="submit" class="pc-submit-btn"><i class="fa-solid fa-paper-plane"></i></button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARD FULLSCREEN VIEWER MODAL -->
+  <div id="card-modal" class="lightbox-overlay" role="dialog" aria-modal="true" aria-label="Card Fullscreen">
+    <button id="btn-close-card-modal" class="lightbox-close" aria-label="Close Card View">
+      <i class="fa-solid fa-xmark"></i>
+    </button>
+    <div class="lightbox-img-wrapper">
+      <img src="assets/images/card-back.jpg" alt="การ์ดแต่งงาน Beau & Kim ขนาดเต็ม" style="max-height: 90vh;">
+    </div>
+  </div>
+
+  <!-- BOTTOM NAVIGATION BAR (FOR MOBILE & TABLET) -->
+  <nav class="bottom-nav-bar" aria-label="Bottom Navigation">
+    <a href="#card-hero" class="bottom-nav-item active">
+      <i class="fa-solid fa-envelope"></i>
+      <span>การ์ดเชิญ</span>
+    </a>
+    <a href="#countdown-sec" class="bottom-nav-item">
+      <i class="fa-regular fa-calendar-check"></i>
+      <span>กำหนดวัน</span>
+    </a>
+    <a href="#schedule" class="bottom-nav-item">
+      <i class="fa-regular fa-clock"></i>
+      <span data-i18n="navSchedule">กำหนดการ</span>
+    </a>
+    <a href="#location" class="bottom-nav-item">
+      <i class="fa-solid fa-map-location-dot"></i>
+      <span data-i18n="navLocation">แผนที่</span>
+    </a>
+    <a href="#gallery" class="bottom-nav-item">
+      <i class="fa-regular fa-images"></i>
+      <span>คลังภาพ</span>
+    </a>
+    <a href="#rsvp" class="bottom-nav-item">
+      <i class="fa-regular fa-envelope-open"></i>
+      <span data-i18n="navRsvp">RSVP</span>
+    </a>
+    <a href="#gift" class="bottom-nav-item">
+      <i class="fa-solid fa-gift"></i>
+      <span data-i18n="navGift">ของขวัญ</span>
+    </a>
+  </nav>
+
+  <!-- JavaScript Modules -->
+  <script src="js/config.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

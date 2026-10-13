@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <defs>
+    <linearGradient id="roseGold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F28BB2"/>
+      <stop offset="50%" stop-color="#C9A96E"/>
+      <stop offset="100%" stop-color="#99A98F"/>
+    </linearGradient>
+  </defs>
+  <circle cx="32" cy="32" r="30" fill="#FCF9F7" stroke="url(#roseGold)" stroke-width="2"/>
+  <circle cx="32" cy="32" r="26" fill="none" stroke="#EEDCD5" stroke-width="0.8" stroke-dasharray="2 2"/>
+  <text x="32" y="38" font-family="'Cinzel', 'Playfair Display', serif" font-size="22" font-weight="600" fill="#7A4058" text-anchor="middle" letter-spacing="1">B&amp;K</text>
+</svg>

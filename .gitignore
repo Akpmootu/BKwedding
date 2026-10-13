@@ -1,0 +1,19 @@
+# Dependencies
+node_modules/
+.npm/
+
+# OS and Temp files
+.DS_Store
+Thumbs.db
+*.tmp
+
+# Raw uncompressed pre-wedding images (Website uses optimized images in assets/images/)
+pre-wedding/
+
+# Local logs and temporary scripts/screenshots
+*.log
+preview_*.png
+resize_images.ps1
+S__*.jpg
+9.png
+
