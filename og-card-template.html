@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <title>OG Card Generator</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:ital,wght@0,600;0,700;1,400&family=Prompt:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      width: 1200px;
+      height: 630px;
+      overflow: hidden;
+      background: #FAF7F2;
+      font-family: 'Prompt', sans-serif;
+      position: relative;
+      display: flex;
+    }
+
+    /* Outer Luxury Border */
+    .outer-frame {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      right: 20px;
+      bottom: 20px;
+      border: 2px solid #C9A96E;
+      pointer-events: none;
+      z-index: 10;
+    }
+    .inner-frame {
+      position: absolute;
+      top: 26px;
+      left: 26px;
+      right: 26px;
+      bottom: 26px;
+      border: 1px solid rgba(201, 169, 110, 0.4);
+      pointer-events: none;
+      z-index: 10;
+    }
+    .corner-decor {
+      position: absolute;
+      width: 28px;
+      height: 28px;
+      border-color: #C9A96E;
+      border-style: solid;
+      z-index: 11;
+    }
+    .tl { top: 16px; left: 16px; border-width: 3px 0 0 3px; }
+    .tr { top: 16px; right: 16px; border-width: 3px 3px 0 0; }
+    .bl { bottom: 16px; left: 16px; border-width: 0 0 3px 3px; }
+    .br { bottom: 16px; right: 16px; border-width: 0 3px 3px 0; }
+
+    /* Left Content Panel */
+    .left-panel {
+      width: 580px;
+      height: 100%;
+      padding: 55px 45px 55px 65px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      position: relative;
+      z-index: 5;
+      background: linear-gradient(90deg, #FAF7F2 82%, rgba(250, 247, 242, 0) 100%);
+    }
+
+    .invitation-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: #9C7A3C;
+      font-family: 'Playfair Display', serif;
+      font-size: 16px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+    .invitation-badge::before,
+    .invitation-badge::after {
+      content: "";
+      width: 30px;
+      height: 1px;
+      background: #C9A96E;
+    }
+
+    .couple-names {
+      font-family: 'Great Vibes', cursive;
+      font-size: 78px;
+      line-height: 1.05;
+      color: #2D2D2D;
+      margin-bottom: 4px;
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.05);
+    }
+
+    .thai-names {
+      font-size: 24px;
+      font-weight: 600;
+      color: #C25B7D;
+      margin-bottom: 22px;
+      letter-spacing: 1px;
+    }
+
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 22px;
+      width: 380px;
+    }
+    .divider-line {
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, #C9A96E, rgba(201,169,110,0.2));
+    }
+    .divider-icon {
+      color: #C9A96E;
+      font-size: 14px;
+    }
+
+    .event-details {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 26px;
+    }
+    .event-date {
+      font-size: 21px;
+      font-weight: 600;
+      color: #2D2D2D;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .event-venue {
+      font-size: 16px;
+      font-weight: 400;
+      color: #666;
+      line-height: 1.4;
+    }
+
+    .hashtag-tag {
+      align-self: flex-start;
+      padding: 8px 20px;
+      background: #FDF2F4;
+      border: 1px solid #F3C9D7;
+      border-radius: 30px;
+      color: #C25B7D;
+      font-family: 'Playfair Display', serif;
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      box-shadow: 0 4px 12px rgba(194, 91, 125, 0.12);
+    }
+
+    /* Right Photo Panel */
+    .right-photo {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 680px;
+      height: 630px;
+      overflow: hidden;
+      z-index: 1;
+    }
+    .right-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 88%;
+      transform: scale(1.10);
+      transform-origin: center 80%;
+    }
+    .photo-fade {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 180px;
+      height: 100%;
+      background: linear-gradient(90deg, #FAF7F2 15%, rgba(250, 247, 242, 0) 100%);
+      z-index: 2;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Outer Frames -->
+  <div class="outer-frame"></div>
+  <div class="inner-frame"></div>
+  <div class="corner-decor tl"></div>
+  <div class="corner-decor tr"></div>
+  <div class="corner-decor bl"></div>
+  <div class="corner-decor br"></div>
+
+  <!-- Left Content Panel -->
+  <div class="left-panel">
+    <div class="invitation-badge">Wedding Invitation</div>
+    <div class="couple-names">Beau & Kim</div>
+    <div class="thai-names">คุณโบ &bull; คุณคิม</div>
+
+    <div class="divider">
+      <div class="divider-line"></div>
+      <div class="divider-icon">✦</div>
+      <div class="divider-line"></div>
+    </div>
+
+    <div class="event-details">
+      <div class="event-date">
+        <span>วันศุกร์ที่ 20 พฤศจิกายน 2569</span>
+      </div>
+      <div class="event-venue">
+        ห้องคริสตัลแกรนด์บอลรูม &bull; โรงแรมคริสตัล หาดใหญ่
+      </div>
+    </div>
+
+    <div class="hashtag-tag">#BeauKimEverAfter</div>
+  </div>
+
+  <!-- Right Photo Panel -->
+  <div class="right-photo">
+    <div class="photo-fade"></div>
+    <img src="assets/images/cover.jpg" alt="Beau & Kim">
+  </div>
+
+</body>
+</html>

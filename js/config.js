@@ -35,8 +35,10 @@ const WEDDING_CONFIG = {
   },
 
   // ----------------------------------------------------------------------------
-  // 2. การ์ดเชิญภาพจริง (INVITATION CARDS)
+  // 2. ลิงก์เว็บไซต์และการ์ดเชิญ (SITE URL & INVITATION CARDS)
   // ----------------------------------------------------------------------------
+  siteUrl: "https://bkwedding.vercel.app", // เปลี่ยนเป็นโดเมนจริงของคุณหากแตกต่างจากนี้
+  ogImage: "https://bkwedding.vercel.app/assets/images/og-image.jpg",
   cards: {
     frontCover: "assets/images/cover.jpg",      // S__122060825_0.jpg (รูปบ่าวสาวในสนามหญ้าพร้อม nw 20 . 11 . 26)
     backCard: "assets/images/card-back.jpg"     // S__122060826_0.jpg (การ์ดแผ่นหลังทางการ แสดงหลังเปิดซอง)
