@@ -33,6 +33,26 @@
         name: "ครอบครัวปราศภัย",
         wishes: "ขออวยพรให้ทั้งสองคนครองคู่กันด้วยความเข้าใจ มีความสุขและความเจริญรุ่งเรือง",
         date: "2026-10-13"
+      },
+      {
+        name: "พี่สาวที่ทำงาน",
+        wishes: "ยินดีด้วยนะน้องโบ ขอให้ชีวิตคู่มีแต่รอยยิ้ม ความอบอุ่น และเสียงหัวเราะในทุกๆ วันนะจ๊ะ",
+        date: "2026-10-13"
+      },
+      {
+        name: "แก๊งเพื่อน ม.ปลาย",
+        wishes: "Happy Wedding! ขอให้รักกันหวานชื่นเหมือนวันแรกที่จีบกัน มีเบบี๋ไวๆ น้าา",
+        date: "2026-10-13"
+      },
+      {
+        name: "น้องๆ แผนกไอที",
+        wishes: "ดีใจกับพี่คิมและพี่โบมากๆ ครับ เหมาะสมกันที่สุด ขอให้ชีวิตคู่ราบรื่นและเปี่ยมด้วยความสุขครับ",
+        date: "2026-10-13"
+      },
+      {
+        name: "เพื่อนร่วมรุ่นมหาวิทยาลัย",
+        wishes: "ยินดีด้วยมากๆ เลยจ้าคิมโบ ขอให้จับมือกันก้าวผ่านทุกเรื่องราว สร้างครอบครัวที่อบอุ่นตลอดไปนะ",
+        date: "2026-10-13"
       }
     ]
   };
@@ -95,7 +115,7 @@
       apologyText: "(ขออภัยหากมิได้เรียนเชิญด้วยตนเอง)",
       navSchedule: "กำหนดการ",
       navLocation: "แผนที่",
-      navRsvp: "RSVP",
+      navRsvp: "อวยพร (RSVP)",
       navGift: "ของขวัญ",
       toastCopied: "คัดลอกเรียบร้อยแล้ว",
       toastColorCopied: "คัดลอกรหัสสีแล้ว: ",
@@ -626,13 +646,12 @@
     if (!grid) return;
 
     grid.innerHTML = WEDDING_CONFIG.gallery.photos.map((photo, index) => {
-      const caption = state.currentLang === 'th' ? photo.captionTh : photo.captionEn;
       const spanClass = (index === 0 || index === 7 || index === 14) ? 'span-2' : '';
       return `
         <div class="gallery-item ${spanClass}" data-index="${index}">
-          <img src="${photo.src}" alt="${caption}" loading="lazy">
+          <img src="${photo.src}" alt="Beau & Kim Pre-Wedding" loading="lazy">
           <div class="gallery-overlay">
-            <span class="gallery-caption">${caption}</span>
+            <span class="gallery-zoom-badge"><i class="fa-solid fa-expand"></i></span>
           </div>
         </div>
       `;
@@ -938,25 +957,56 @@
   // ----------------------------------------------------------------------------
   // 10. GUESTBOOK
   // ----------------------------------------------------------------------------
+  // ----------------------------------------------------------------------------
+  // 10. GUESTBOOK (SPEECH BUBBLES WITH RANDOMIZATION & SHUFFLE)
+  // ----------------------------------------------------------------------------
   function initGuestbook() {
+    // Shuffle wishes on page load for randomized display
+    shuffleArray(state.wishes);
     renderWishes();
+
+    const shuffleBtn = document.getElementById('btn-shuffle-wishes');
+    if (shuffleBtn) {
+      shuffleBtn.addEventListener('click', () => {
+        shuffleArray(state.wishes);
+        renderWishes();
+        showToast("สุ่มคำอวยพรเรียบร้อยแล้วค่ะ ✨");
+      });
+    }
+  }
+
+  function shuffleArray(arr) {
+    for (let i = arr.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
   }
 
   function renderWishes() {
-    const container = document.getElementById('wishes-carousel-container');
+    const container = document.getElementById('wishes-bubble-container') || document.getElementById('wishes-carousel-container');
     if (!container) return;
 
-    container.innerHTML = state.wishes.map(item => `
-      <div class="wish-card">
-        <p class="wish-text">“${escapeHtml(item.wishes)}”</p>
-        <div>
-          <div class="wish-author">
-            <i class="fa-solid fa-feather-pointed"></i> ${escapeHtml(item.name)}
+    const pastelThemes = ['theme-rose', 'theme-sage', 'theme-peach', 'theme-lavender', 'theme-sky'];
+
+    container.innerHTML = state.wishes.map((item, idx) => {
+      const themeClass = pastelThemes[idx % pastelThemes.length];
+      const isAlt = idx % 2 === 1 ? 'bubble-alt' : '';
+      return `
+        <div class="wish-bubble ${themeClass} ${isAlt}">
+          <div class="bubble-quote">
+            <i class="fa-solid fa-quote-left"></i>
+            <span>${escapeHtml(item.wishes)}</span>
           </div>
-          <span class="wish-date">${item.date || '2026-11-20'}</span>
+          <div class="bubble-footer">
+            <div class="bubble-author">
+              <span class="bubble-author-badge"><i class="fa-solid fa-feather-pointed"></i></span>
+              <span>${escapeHtml(item.name)}</span>
+            </div>
+            <span class="bubble-date">${item.date || '2026-11-20'}</span>
+          </div>
         </div>
-      </div>
-    `).join('');
+      `;
+    }).join('');
   }
 
   function addWishToCarousel(name, message) {
@@ -1200,9 +1250,29 @@
     const navItems = document.querySelectorAll('.bottom-nav-item');
     const sections = document.querySelectorAll('section[id], footer[id]');
 
+    // Mapping of page sections to the 5 key bottom nav buttons:
+    // 1: card-hero (การ์ดเชิญ)
+    // 2: schedule (กำหนดการ)
+    // 3: rsvp (อวยพร RSVP) -> Most prominent button
+    // 4: location (แผนที่)
+    // 5: gift (ของขวัญ)
+    const sectionToNav = {
+      'card-hero': 'card-hero',
+      'countdown-sec': 'card-hero',
+      'schedule': 'schedule',
+      'journey': 'schedule',
+      'location': 'location',
+      'dresscode': 'schedule',
+      'gallery': 'rsvp',
+      'rsvp': 'rsvp',
+      'guestbook': 'rsvp',
+      'gift': 'gift',
+      'contact': 'gift'
+    };
+
     window.addEventListener('scroll', () => {
-      let currentSectionId = '';
-      const scrollPos = window.scrollY + 220;
+      let currentSectionId = 'card-hero';
+      const scrollPos = window.scrollY + 240;
 
       sections.forEach(sec => {
         if (scrollPos >= sec.offsetTop) {
@@ -1210,9 +1280,11 @@
         }
       });
 
+      const activeNavTarget = sectionToNav[currentSectionId] || 'card-hero';
+
       navItems.forEach(item => {
-        const href = item.getAttribute('href').replace('#', '');
-        if (href === currentSectionId) {
+        const navTarget = item.getAttribute('data-nav') || item.getAttribute('href')?.replace('#', '');
+        if (navTarget === activeNavTarget) {
           item.classList.add('active');
         } else {
           item.classList.remove('active');

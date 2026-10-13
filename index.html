@@ -76,6 +76,12 @@
        1. ENVELOPE / OPENING SCREEN (หน้าแรก/หน้าปกการ์ดเชิญ: S__122060825_0.jpg)
        ======================================================================== -->
   <div id="envelope-screen" class="envelope-screen" role="dialog" aria-modal="true" aria-label="Wedding Envelope">
+    <!-- Fullscreen Background Photo with Gentle Zoom & Gradient Overlay -->
+    <div class="envelope-bg-wrapper">
+      <img src="assets/images/cover.jpg" alt="Beau & Kim" class="envelope-bg-image">
+      <div class="envelope-bg-overlay"></div>
+    </div>
+
     <div class="envelope-screen-inner">
       <!-- Eco Message Top Bar (สไตล์ MaiJack) -->
       <div class="envelope-eco-bar">
@@ -83,30 +89,25 @@
         <span>เพื่อเป็นการลดปริมาณการใช้กระดาษ ขอเรียนเชิญทุกท่านร่วมเป็นเกียรติในงานแต่งงานของเราผ่านการ์ดแต่งงานออนไลน์นี้</span>
       </div>
 
-      <!-- Center Card Frame with Clean Couple Photo -->
-      <div class="envelope-card-frame">
-        <div class="envelope-card-image-wrap">
-          <img src="assets/images/cover.jpg" alt="Beau & Kim" class="envelope-card-photo">
-          <div class="envelope-card-overlay"></div>
-          
-          <div class="envelope-card-content">
-            <!-- Guest Name Box (Extracted from ?to=...) -->
-            <div class="envelope-recipient-box">
-              <div class="envelope-recipient-label" data-i18n="envRecipientLabel">DEAR GUEST</div>
-              <div id="envelope-guest-name" class="envelope-recipient-name">เรียนแขกผู้มีเกียรติ</div>
-            </div>
+      <!-- Center & Recipient Typography (Fullscreen Floating) -->
+      <div class="envelope-center-content">
+        <!-- Guest Name Box (Extracted from ?to=...) -->
+        <div class="envelope-recipient-box">
+          <div class="envelope-recipient-label" data-i18n="envRecipientLabel">DEAR GUEST</div>
+          <div id="envelope-guest-name" class="envelope-recipient-name">เรียนแขกผู้มีเกียรติ</div>
+        </div>
 
-            <!-- Typography Overlay (สไตล์ MaiJack) -->
-            <div class="envelope-bottom-titles">
-              <div class="envelope-couple-names font-serif">NATTHIYA &amp; WUTTISAPAT</div>
-              <div class="envelope-date-badge">20 . 11 . 2026</div>
-              <div class="envelope-hashtag">#BeauKimEverAfter</div>
-            </div>
-          </div>
+        <!-- Typography Overlay (สไตล์ MaiJack) -->
+        <div class="envelope-bottom-titles">
+          <p class="envelope-sub-intro">THE WEDDING OF</p>
+          <div class="envelope-couple-names font-serif">NATTHIYA &amp; WUTTISAPAT</div>
+          <div class="envelope-couple-thai">โบ (ณัฐฐิญา) &amp; คิม (วุฒศภัทร์)</div>
+          <div class="envelope-date-badge">20 . 11 . 2026</div>
+          <div class="envelope-hashtag">#BeauKimEverAfter</div>
         </div>
       </div>
 
-      <!-- Tap to Open Button -->
+      <!-- Tap to Open Button (Fixed at Bottom with Glow) -->
       <div class="envelope-button-wrap">
         <button id="wax-seal-btn" class="btn-tap-to-open" aria-label="แตะเพื่อเปิดการ์ดเชิญ">
           <i class="fa-solid fa-envelope-open-text"></i>
@@ -157,10 +158,12 @@
       </div>
     </section>
 
-    <!-- RANDOM DIVIDER 1 -->
-    <div class="random-image-divider">
-      <div class="divider-parallax-bg" style="background-image: url('assets/images/dividers/divider-1.jpg');"></div>
-      <div class="divider-overlay"></div>
+    <!-- PHOTO SEPARATOR 1 (Uncropped Full Image) -->
+    <div class="section-photo-separator fade-up">
+      <div class="photo-separator-card">
+        <img src="assets/images/dividers/divider-1.jpg" alt="Beau & Kim Pre-Wedding" class="photo-separator-img" loading="lazy">
+        <div class="photo-separator-heart"><i class="fa-solid fa-heart"></i></div>
+      </div>
     </div>
 
     <!-- 3. SECTION COUNTDOWN & CALENDAR (นับถอยหลังถึง 20 พ.ย. 2569 + ปุ่ม Calendar) -->
@@ -209,10 +212,12 @@
       </div>
     </section>
 
-    <!-- RANDOM DIVIDER 2 -->
-    <div class="random-image-divider">
-      <div class="divider-parallax-bg" style="background-image: url('assets/images/dividers/divider-2.jpg');"></div>
-      <div class="divider-overlay"></div>
+    <!-- PHOTO SEPARATOR 2 (Uncropped Full Image) -->
+    <div class="section-photo-separator fade-up">
+      <div class="photo-separator-card">
+        <img src="assets/images/dividers/divider-2.jpg" alt="Beau & Kim Pre-Wedding" class="photo-separator-img" loading="lazy">
+        <div class="photo-separator-heart"><i class="fa-solid fa-heart"></i></div>
+      </div>
     </div>
 
     <!-- 4. SECTION WEDDING SCHEDULE (กำหนดการวันงาน) -->
@@ -232,10 +237,12 @@
       </div>
     </section>
 
-    <!-- RANDOM DIVIDER 3 -->
-    <div class="random-image-divider">
-      <div class="divider-parallax-bg" style="background-image: url('assets/images/dividers/divider-3.jpg');"></div>
-      <div class="divider-overlay"></div>
+    <!-- PHOTO SEPARATOR 3 (Uncropped Full Image) -->
+    <div class="section-photo-separator fade-up">
+      <div class="photo-separator-card">
+        <img src="assets/images/dividers/divider-3.jpg" alt="Beau & Kim Pre-Wedding" class="photo-separator-img" loading="lazy">
+        <div class="photo-separator-heart"><i class="fa-solid fa-heart"></i></div>
+      </div>
     </div>
 
     <!-- 5. SECTION JOURNEY TO MARRIAGE (เรื่องราวความรัก แยกเป็นอีกหัวข้อ) -->
@@ -259,10 +266,12 @@
       </div>
     </section>
 
-    <!-- RANDOM DIVIDER 3 -->
-    <div class="random-image-divider">
-      <div class="divider-parallax-bg" style="background-image: url('assets/images/dividers/divider-3.jpg');"></div>
-      <div class="divider-overlay"></div>
+    <!-- PHOTO SEPARATOR 4 (Uncropped Full Image) -->
+    <div class="section-photo-separator fade-up">
+      <div class="photo-separator-card">
+        <img src="assets/images/dividers/divider-6.jpg" alt="Beau & Kim Pre-Wedding" class="photo-separator-img" loading="lazy">
+        <div class="photo-separator-heart"><i class="fa-solid fa-heart"></i></div>
+      </div>
     </div>
 
     <!-- 5. SECTION VENUE & LOCATION (ใช้แค่ Google Maps ตามคำขอ) -->
@@ -301,10 +310,12 @@
       </div>
     </section>
 
-    <!-- RANDOM DIVIDER 4 -->
-    <div class="random-image-divider">
-      <div class="divider-parallax-bg" style="background-image: url('assets/images/dividers/divider-4.jpg');"></div>
-      <div class="divider-overlay"></div>
+    <!-- PHOTO SEPARATOR 5 (Uncropped Full Image) -->
+    <div class="section-photo-separator fade-up">
+      <div class="photo-separator-card">
+        <img src="assets/images/dividers/divider-4.jpg" alt="Beau & Kim Pre-Wedding" class="photo-separator-img" loading="lazy">
+        <div class="photo-separator-heart"><i class="fa-solid fa-heart"></i></div>
+      </div>
     </div>
 
     <!-- 6. SECTION DRESS CODE (6 เฉดสี เขียว 3 + ชมพู 3) -->
@@ -328,10 +339,12 @@
       </div>
     </section>
 
-    <!-- RANDOM DIVIDER 5 -->
-    <div class="random-image-divider">
-      <div class="divider-parallax-bg" style="background-image: url('assets/images/dividers/divider-5.jpg');"></div>
-      <div class="divider-overlay"></div>
+    <!-- PHOTO SEPARATOR 6 (Uncropped Full Image) -->
+    <div class="section-photo-separator fade-up">
+      <div class="photo-separator-card">
+        <img src="assets/images/dividers/divider-5.jpg" alt="Beau & Kim Pre-Wedding" class="photo-separator-img" loading="lazy">
+        <div class="photo-separator-heart"><i class="fa-solid fa-heart"></i></div>
+      </div>
     </div>
 
     <!-- 7. SECTION PRE-WEDDING GALLERY (กดดูรูป / ดาวน์โหลด / กดไลค์ / คอมเมนต์) -->
@@ -458,21 +471,29 @@
       </div>
     </section>
 
-    <!-- 9. SECTION GUESTBOOK (สมุดอวยพร) -->
+    <!-- 9. SECTION GUESTBOOK (สมุดอวยพร สไตล์ Speech Bubbles สุ่มข้อความ) -->
     <section id="guestbook" class="section-block">
       <div class="luxury-card fade-up">
         <div class="card-header-icon">
-          <i class="fa-solid fa-pen-nib"></i>
+          <i class="fa-solid fa-comments"></i>
         </div>
 
         <h2 class="section-title" data-i18n="guestbookTitle">Guestbook</h2>
         <p class="section-subtitle" data-i18n="guestbookSubtitle">คำอวยพรจากแขกผู้มีเกียรติ</p>
 
-        <div class="wishes-carousel" id="wishes-carousel-container">
-          <!-- Rendered dynamically -->
+        <!-- Shuffle Wishes Action Bar -->
+        <div class="guestbook-action-bar">
+          <button type="button" id="btn-shuffle-wishes" class="btn-shuffle-wishes" aria-label="สุ่มข้อความอวยพร">
+            <i class="fa-solid fa-shuffle"></i> <span>สุ่มข้อความอวยพร</span>
+          </button>
         </div>
 
-        <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.5rem;" data-i18n="guestbookHint">
+        <!-- Speech Bubbles Container -->
+        <div class="wishes-bubble-wall" id="wishes-bubble-container">
+          <!-- Rendered dynamically as speech bubbles -->
+        </div>
+
+        <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 1.2rem;" data-i18n="guestbookHint">
           * ส่งคำอวยพรได้ผ่านแบบฟอร์ม RSVP หรือปุ่มส่งของขวัญ
         </p>
       </div>
@@ -660,37 +681,27 @@
     </div>
   </div>
 
-  <!-- BOTTOM NAVIGATION BAR (FOR MOBILE & TABLET) -->
+  <!-- BOTTOM NAVIGATION BAR (5 KEY BUTTONS WITH PROMINENT RSVP) -->
   <nav class="bottom-nav-bar" aria-label="Bottom Navigation">
-    <a href="#card-hero" class="bottom-nav-item active">
-      <i class="fa-solid fa-envelope"></i>
+    <a href="#card-hero" class="bottom-nav-item active" data-nav="card-hero">
+      <i class="fa-regular fa-envelope"></i>
       <span>การ์ดเชิญ</span>
     </a>
-    <a href="#countdown-sec" class="bottom-nav-item">
-      <i class="fa-regular fa-calendar-check"></i>
-      <span>กำหนดวัน</span>
-    </a>
-    <a href="#schedule" class="bottom-nav-item">
+    <a href="#schedule" class="bottom-nav-item" data-nav="schedule">
       <i class="fa-regular fa-clock"></i>
       <span data-i18n="navSchedule">กำหนดการ</span>
     </a>
-    <a href="#journey" class="bottom-nav-item">
-      <i class="fa-solid fa-heart"></i>
-      <span>เรื่องราว</span>
+    <a href="#rsvp" class="bottom-nav-item nav-rsvp-prominent" data-nav="rsvp">
+      <div class="nav-rsvp-pill">
+        <i class="fa-solid fa-heart-circle-check"></i>
+        <span data-i18n="navRsvp">อวยพร (RSVP)</span>
+      </div>
     </a>
-    <a href="#location" class="bottom-nav-item">
+    <a href="#location" class="bottom-nav-item" data-nav="location">
       <i class="fa-solid fa-map-location-dot"></i>
       <span data-i18n="navLocation">แผนที่</span>
     </a>
-    <a href="#gallery" class="bottom-nav-item">
-      <i class="fa-regular fa-images"></i>
-      <span>คลังภาพ</span>
-    </a>
-    <a href="#rsvp" class="bottom-nav-item">
-      <i class="fa-regular fa-envelope-open"></i>
-      <span data-i18n="navRsvp">RSVP</span>
-    </a>
-    <a href="#gift" class="bottom-nav-item">
+    <a href="#gift" class="bottom-nav-item" data-nav="gift">
       <i class="fa-solid fa-gift"></i>
       <span data-i18n="navGift">ของขวัญ</span>
     </a>
