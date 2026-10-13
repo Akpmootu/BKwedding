@@ -261,8 +261,8 @@ const WEDDING_CONFIG = {
   // ----------------------------------------------------------------------------
   // 11. GOOGLE APPS SCRIPT WEB APP
   // ----------------------------------------------------------------------------
-  // นำ URL ที่ได้จากการ Deploy Apps Script บน akaporn1234@gmail.com มาใส่ที่นี่
-  appsScriptUrl: "",
+  // บัญชี akaporn1234@gmail.com สำหรับบันทึก RSVP, Wishes, Photo Comments และอัปโหลดสลิปเข้า Google Drive
+  appsScriptUrl: "https://script.google.com/macros/s/AKfycbxs49enWNRD0kRefZCOa5ucVn6RrmEsXmFhe4nBRp0z-PCacWangyfPijhz6XfOpMmnbg/exec",
   rsvpDeadline: "2026-11-15T23:59:59+07:00",
 
   // ----------------------------------------------------------------------------
