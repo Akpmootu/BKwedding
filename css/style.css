@@ -640,7 +640,7 @@ img {
 .random-image-divider {
   position: relative;
   width: 100%;
-  height: 240px;
+  height: clamp(240px, 34vw, 340px);
   overflow: hidden;
   margin: 0;
 }
@@ -649,9 +649,9 @@ img {
   position: absolute;
   inset: 0;
   background-size: cover;
-  background-position: center;
+  background-position: center center;
   background-repeat: no-repeat;
-  filter: brightness(0.92);
+  filter: brightness(0.96);
   transform: scale(1.02);
 }
 
@@ -1498,45 +1498,79 @@ textarea.form-control {
 }
 
 .contact-avatar-wrap {
-  width: 90px;
-  height: 90px;
+  width: 96px;
+  height: 96px;
   margin: 0 auto 0.8rem;
   border-radius: 50%;
   overflow: hidden;
   border: 3px solid var(--rose-soft);
-  box-shadow: 0 4px 12px rgba(238, 60, 142, 0.15);
-  background: #FDF1F5;
+  box-shadow: 0 4px 14px rgba(238, 60, 142, 0.18);
+  background: #FFFFFF;
 }
 
 .contact-avatar-wrap img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center center;
 }
 
 .contact-person-name {
-  font-size: 0.95rem;
+  font-size: 1rem;
   font-weight: 600;
   color: var(--text-primary);
-  margin-bottom: 6px;
+  margin-bottom: 8px;
 }
 
-.contact-tel-link {
-  font-size: 0.88rem;
-  color: var(--green-deep);
+.contact-actions-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  align-items: center;
+  width: 100%;
+}
+
+.contact-action-btn {
+  font-size: 0.84rem;
   font-weight: 600;
   display: inline-flex;
   align-items: center;
-  gap: 0.3rem;
-  background: var(--green-pale);
-  padding: 0.3rem 0.8rem;
+  justify-content: center;
+  gap: 0.4rem;
+  padding: 0.42rem 1rem;
   border-radius: var(--radius-full);
   transition: all var(--transition-fast);
+  text-decoration: none;
+  width: 100%;
+  max-width: 190px;
 }
 
-.contact-tel-link:hover {
-  background: var(--rose-deep);
+.contact-tel-btn {
+  color: var(--green-deep);
+  background: var(--green-pale);
+  border: 1px solid rgba(148, 167, 136, 0.35);
+}
+
+.contact-tel-btn:hover {
+  background: var(--green-deep);
   color: #FFFFFF;
+  transform: translateY(-1px);
+}
+
+.contact-fb-btn {
+  color: #1877F2;
+  background: #EDF5FD;
+  border: 1px solid rgba(24, 119, 242, 0.25);
+}
+
+.contact-fb-btn:hover {
+  background: #1877F2;
+  color: #FFFFFF;
+  transform: translateY(-1px);
+}
+
+.attend-only-field {
+  transition: all 0.3s ease;
 }
 
 .apology-box {

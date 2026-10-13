@@ -6,11 +6,11 @@
  * ==============================================================================
  * โค้ดนี้ใช้ติดตั้งใน Google Sheets > Extensions > Apps Script
  * รองรับ:
- * 1. บันทึก RSVP ลงชีต "RSVP"
+ * 1. บันทึก RSVP ลงชีต "RSVP" (หากมีคำอวยพร บันทึกลง "Wishes" ด้วย)
  * 2. บันทึกคำอวยพร Guestbook ลงชีต "Wishes"
  * 3. บันทึกคอมเมนต์รูปภาพแกลเลอรี ลงชีต "PhotoComments"
  * 4. รับไฟล์ภาพสลิปโอนเงิน (Special Gift) บันทึกลง Google Drive โฟลเดอร์ "Wedding_BeauKim_Slips"
- *    และบันทึกข้อมูลพร้อมลิงก์ไฟล์ลงชีต "Gifts & Slips"
+ *    และบันทึกข้อมูลพร้อมลิงก์ไฟล์ลงชีต "Gifts & Slips" และชีต "Wishes" ให้เห็นครบทุกช่อง
  * 5. คืนค่า JSON พร้อมจัดการ CORS สำหรับ Vercel และ GitHub Pages
  */
 
@@ -58,19 +58,24 @@ function doPost(e) {
         rsvpSheet.getRange(1, 1, 1, 8).setFontWeight("bold").setBackground("#F8D8E8");
       }
 
+      const attendanceText = (data.attendance === "attend" || data.attendance === "ยินดีเข้าร่วมงาน")
+        ? "ยินดีเข้าร่วมงาน"
+        : "ขอแสดงความยินดี แต่ไม่สะดวก";
+
       rsvpSheet.appendRow([
         timestamp,
         data.name || "-",
         data.phone || "-",
-        data.attendance === "attend" ? "ยินดีเข้าร่วมงาน" : "ไม่สะดวกเข้าร่วมงาน",
+        attendanceText,
         data.followers || "0",
         data.side || "-",
         data.diet || "-",
         data.wishes || "-"
       ]);
 
+      // หากมีคำอวยพร ส่งต่อไปยังชีต Wishes ด้วย
       if (data.wishes && data.wishes.trim() !== "" && data.wishes.trim() !== "-") {
-        saveWishToSheet(ss, timestamp, data.name, data.wishes);
+        saveWishToSheet(ss, timestamp, data.name, data.wishes, "-", "-", "RSVP (" + attendanceText + ")");
       }
 
       return createJsonResponse({
@@ -80,7 +85,7 @@ function doPost(e) {
 
     // 2. GUESTBOOK WISH
     } else if (type === "wish") {
-      saveWishToSheet(ss, timestamp, data.name, data.message || data.wishes);
+      saveWishToSheet(ss, timestamp, data.name, data.message || data.wishes, "-", "-", "Guestbook (สมุดอวยพร)");
       return createJsonResponse({
         status: "success",
         message: "Wish recorded successfully"
@@ -112,7 +117,7 @@ function doPost(e) {
         message: "Photo comment recorded successfully"
       });
 
-    // 4. GIFT SLIP UPLOAD (บันทึกรูปสลิปลง Google Drive + บันทึกลง Sheet)
+    // 4. GIFT SLIP UPLOAD (บันทึกรูปสลิปลง Google Drive + บันทึกลง Sheet ทั้งสองหน้า)
     } else if (type === "slip_upload") {
       let fileUrl = "";
 
@@ -122,7 +127,8 @@ function doPost(e) {
           const folder = getOrCreateFolder(DRIVE_FOLDER_NAME);
           const base64Data = data.slipBase64.replace(/^data:image\/\w+;base64,/, "");
           const decodedBytes = Utilities.base64Decode(base64Data);
-          const fileName = `Slip_${Utilities.formatDate(timestamp, "Asia/Bangkok", "yyyyMMdd_HHmmss")}_${(data.name || "Guest").replace(/\s+/g, "_")}.jpg`;
+          const senderClean = (data.name || "Guest").replace(/[^\w\sก-๙]/gi, "").trim().replace(/\s+/g, "_");
+          const fileName = `Slip_${Utilities.formatDate(timestamp, "Asia/Bangkok", "yyyyMMdd_HHmmss")}_${senderClean}.jpg`;
           const blob = Utilities.newBlob(decodedBytes, data.mimeType || "image/jpeg", fileName);
           
           const file = folder.createFile(blob);
@@ -133,7 +139,7 @@ function doPost(e) {
         }
       }
 
-      // บันทึกลงในชีต Gifts & Slips
+      // 4.1 บันทึกลงในชีต Gifts & Slips
       let giftSheet = ss.getSheetByName(SHEET_NAME_GIFTS);
       if (!giftSheet) {
         giftSheet = ss.insertSheet(SHEET_NAME_GIFTS);
@@ -155,10 +161,16 @@ function doPost(e) {
         data.message || "-"
       ]);
 
-      // หากมีคำอวยพร ส่งต่อไปยังชีต Wishes ด้วย
-      if (data.message && data.message.trim() !== "" && data.message.trim() !== "-") {
-        saveWishToSheet(ss, timestamp, data.name, data.message);
-      }
+      // 4.2 บันทึกลงชีต Wishes ด้วย เพื่อให้เห็นทั้งจำนวนเงิน ลิงก์สลิป และคำอวยพรในชีตเดียว
+      saveWishToSheet(
+        ss,
+        timestamp,
+        data.name,
+        data.message || "ร่วมแสดงความยินดีและส่งของขวัญ",
+        data.amount || "-",
+        fileUrl || "-",
+        "Special Gift (แจ้งโอนสลิป)"
+      );
 
       return createJsonResponse({
         status: "success",
@@ -186,7 +198,7 @@ function doPost(e) {
 function doGet(e) {
   try {
     const ss = SpreadsheetApp.getActiveSpreadsheet();
-    const type = e.parameter.type || "wishes";
+    const type = (e && e.parameter && e.parameter.type) ? e.parameter.type : "wishes";
 
     if (type === "wishes") {
       const wishSheet = ss.getSheetByName(SHEET_NAME_WISHES);
@@ -238,24 +250,38 @@ function doGet(e) {
 }
 
 /**
- * ฟังก์ชันช่วยบันทึกคำอวยพรลงชีต Wishes
+ * ฟังก์ชันช่วยบันทึกคำอวยพรลงชีต Wishes (พร้อมแสดงจำนวนเงินและลิงก์สลิปครบถ้วน)
  */
-function saveWishToSheet(ss, timestamp, name, message) {
+function saveWishToSheet(ss, timestamp, name, message, amount, fileUrl, source) {
   let wishSheet = ss.getSheetByName(SHEET_NAME_WISHES);
   if (!wishSheet) {
     wishSheet = ss.insertSheet(SHEET_NAME_WISHES);
     wishSheet.appendRow([
       "วัน-เวลา (Timestamp)",
-      "ชื่อผู้ส่ง",
-      "ข้อความอวยพร"
+      "ชื่อผู้ส่ง / ผู้โอน",
+      "ข้อความอวยพร",
+      "จำนวนเงิน (บาท)",
+      "ลิงก์ไฟล์สลิป (Google Drive)",
+      "ช่องทาง"
     ]);
-    wishSheet.getRange(1, 1, 1, 3).setFontWeight("bold").setBackground("#DFE7DC");
+    wishSheet.getRange(1, 1, 1, 6).setFontWeight("bold").setBackground("#DFE7DC");
+  } else {
+    // ตรวจสอบว่ามีคอลัมน์ 4, 5, 6 หรือยัง หากสร้างชีตไว้ก่อนหน้าให้เติมหัวตารางอัตโนมัติ
+    const lastCol = wishSheet.getLastColumn();
+    if (lastCol < 6) {
+      if (lastCol < 4) wishSheet.getRange(1, 4).setValue("จำนวนเงิน (บาท)").setFontWeight("bold").setBackground("#DFE7DC");
+      if (lastCol < 5) wishSheet.getRange(1, 5).setValue("ลิงก์ไฟล์สลิป (Google Drive)").setFontWeight("bold").setBackground("#DFE7DC");
+      if (lastCol < 6) wishSheet.getRange(1, 6).setValue("ช่องทาง").setFontWeight("bold").setBackground("#DFE7DC");
+    }
   }
 
   wishSheet.appendRow([
     timestamp,
     name || "แขกผู้มีเกียรติ",
-    message || ""
+    message || "-",
+    amount || "-",
+    fileUrl || "-",
+    source || "Guestbook"
   ]);
 }
 

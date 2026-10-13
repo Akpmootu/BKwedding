@@ -197,14 +197,16 @@ const WEDDING_CONFIG = {
       nameEn: "Beau (Bride)",
       photo: "assets/images/bride-contact.jpg",
       phone: "091-105-1074",
-      phoneRaw: "0911051074"
+      phoneRaw: "0911051074",
+      facebook: "https://www.facebook.com/Beau.Nattiya"
     },
     {
       nameTh: "คุณคิม (เจ้าบ่าว)",
       nameEn: "Kim (Groom)",
       photo: "assets/images/groom-contact.jpg",
       phone: "083-351-3634",
-      phoneRaw: "0833513634"
+      phoneRaw: "0833513634",
+      facebook: "https://www.facebook.com/wutsapat.pradpai"
     }
   ],
 

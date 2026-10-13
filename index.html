@@ -368,8 +368,8 @@
             </div>
           </div>
 
-          <!-- Followers Counter -->
-          <div id="followers-group" class="form-group">
+          <!-- Followers Counter (แสดงเฉพาะเมื่อยินดีเข้าร่วมงาน) -->
+          <div id="followers-group" class="form-group attend-only-field">
             <label class="form-label" data-i18n="formFollowersLabel">จำนวนผู้ติดตาม (ไม่รวมตัวท่าน)</label>
             <div class="counter-box">
               <button type="button" id="btn-follower-minus" class="counter-btn" aria-label="ลดจำนวนผู้ติดตาม">-</button>
@@ -378,8 +378,8 @@
             </div>
           </div>
 
-          <!-- Guest Side -->
-          <div class="form-group">
+          <!-- Guest Side (แสดงเฉพาะเมื่อยินดีเข้าร่วมงาน) -->
+          <div id="side-group" class="form-group attend-only-field">
             <label class="form-label" data-i18n="formSideLabel">ฝ่ายแขกผู้มีเกียรติ</label>
             <div class="choice-cards-row">
               <label class="choice-card-label selected" id="label-side-bride">
@@ -395,8 +395,8 @@
             </div>
           </div>
 
-          <!-- Dietary Restrictions -->
-          <div class="form-group">
+          <!-- Dietary Restrictions (แสดงเฉพาะเมื่อยินดีเข้าร่วมงาน) -->
+          <div id="diet-group" class="form-group attend-only-field">
             <label for="rsvp-diet" class="form-label" data-i18n="formDietLabel">อาหารที่แพ้ / มังสวิรัติ (ถ้ามี)</label>
             <input type="text" id="rsvp-diet" name="diet" class="form-control" placeholder="เช่น แพ้อาหารทะเล, ทานมังสวิรัติ">
           </div>
@@ -551,7 +551,7 @@
           </div>
           <div class="form-group" style="text-align: left; margin-bottom: 0.8rem;">
             <label for="slip-amount" class="form-label" style="font-size: 0.85rem;">จำนวนเงิน (บาท) <span style="font-weight:normal;color:#888;">(ไม่บังคับ)</span></label>
-            <input type="number" id="slip-amount" name="amount" class="form-control" placeholder="เช่น 1,000">
+            <input type="text" id="slip-amount" name="amount" inputmode="decimal" class="form-control" placeholder="เช่น 1,000 หรือ 500">
           </div>
           <div class="form-group" style="text-align: left; margin-bottom: 0.8rem;">
             <label for="slip-file" class="form-label" style="font-size: 0.85rem;">แนบรูปภาพสลิปโอนเงิน <span class="required">*</span></label>

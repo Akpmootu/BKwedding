@@ -253,14 +253,14 @@
     if (gMapBtn) gMapBtn.href = WEDDING_CONFIG.venue.googleMapsLink;
   }
 
-  // Schedule Timeline (รวม Wedding Schedule & Love Milestones สไตล์ 9.png)
+  // Schedule Timeline (Wedding Day Schedule สไตล์ Timeline ตามกำหนดการวันงาน)
   function renderScheduleTimeline() {
     const container = document.getElementById('schedule-timeline-container');
     if (!container) return;
 
     const isTh = state.currentLang === 'th';
     
-    // 1. Wedding Day Schedule Events
+    // Wedding Day Schedule Events (08.09, 09.39, 18.00)
     const scheduleItemsHtml = WEDDING_CONFIG.scheduleTimeline.map(item => {
       const time = isTh ? item.timeTh : item.timeEn;
       const title = isTh ? item.titleTh : item.titleEn;
@@ -279,33 +279,10 @@
       `;
     }).join('');
 
-    // 2. Love Milestones
-    const milestonesHtml = WEDDING_CONFIG.loveMilestones.map(item => {
-      const desc = isTh ? item.descTh : item.descEn;
-      return `
-        <div class="journey-item">
-          <div class="journey-node-icon">
-            <i class="${item.icon}"></i>
-          </div>
-          <div class="journey-content">
-            <div class="journey-date">${item.date}</div>
-            <div class="journey-event-title">${item.title}</div>
-            <p class="journey-desc">${desc}</p>
-          </div>
-        </div>
-      `;
-    }).join('');
-
-    container.innerHTML = scheduleItemsHtml + `
-      <div style="text-align:center; margin: 1.5rem 0 1rem;">
-        <span style="font-family:var(--font-serif); font-size:0.95rem; font-style:italic; color:var(--rose-deep); letter-spacing:1px;">
-          — Journey to Marriage —
-        </span>
-      </div>
-    ` + milestonesHtml;
+    container.innerHTML = scheduleItemsHtml;
   }
 
-  // Contact Persons with Portraits (โบ & คิม)
+  // Contact Persons with Portraits (โบ & คิม) พร้อมปุ่มโทรและ Facebook
   function renderContactsWithPortraits() {
     const container = document.getElementById('contact-grid-container');
     if (!container) return;
@@ -319,9 +296,16 @@
             <img src="${c.photo}" alt="${name}">
           </div>
           <div class="contact-person-name">${name}</div>
-          <a href="tel:${c.phoneRaw}" class="contact-tel-link">
-            <i class="fa-solid fa-phone"></i> ${c.phone}
-          </a>
+          <div class="contact-actions-row">
+            <a href="tel:${c.phoneRaw}" class="contact-action-btn contact-tel-btn">
+              <i class="fa-solid fa-phone"></i> ${c.phone}
+            </a>
+            ${c.facebook ? `
+              <a href="${c.facebook}" target="_blank" rel="noopener noreferrer" class="contact-action-btn contact-fb-btn">
+                <i class="fa-brands fa-facebook"></i> Facebook
+              </a>
+            ` : ''}
+          </div>
         </div>
       `;
     }).join('');
@@ -822,18 +806,24 @@
 
     const attendYes = document.getElementById('label-attend-yes');
     const attendNo = document.getElementById('label-attend-no');
-    const followersGroup = document.getElementById('followers-group');
+    const attendOnlyFields = document.querySelectorAll('.attend-only-field');
+
+    function toggleAttendanceFields(isAttending) {
+      attendOnlyFields.forEach(el => {
+        el.style.display = isAttending ? 'block' : 'none';
+      });
+    }
 
     if (attendYes && attendNo) {
       attendYes.addEventListener('click', () => {
         attendYes.classList.add('selected');
         attendNo.classList.remove('selected');
-        if (followersGroup) followersGroup.style.display = 'block';
+        toggleAttendanceFields(true);
       });
       attendNo.addEventListener('click', () => {
         attendNo.classList.add('selected');
         attendYes.classList.remove('selected');
-        if (followersGroup) followersGroup.style.display = 'none';
+        toggleAttendanceFields(false);
       });
     }
 
@@ -880,15 +870,18 @@
         e.preventDefault();
 
         const formData = new FormData(form);
+        const attendanceVal = formData.get('attendance');
+        const isAttending = attendanceVal === 'attend';
+
         const payload = {
           type: "rsvp",
           timestamp: new Date().toISOString(),
-          name: formData.get('name'),
-          phone: formData.get('phone'),
-          attendance: formData.get('attendance'),
-          followers: formData.get('attendance') === 'attend' ? (formData.get('followers') || '0') : '0',
-          side: formData.get('side'),
-          diet: formData.get('diet') || '-',
+          name: formData.get('name') || "แขกผู้มีเกียรติ",
+          phone: formData.get('phone') || "-",
+          attendance: isAttending ? "attend" : "cannot_attend",
+          followers: isAttending ? (formData.get('followers') || '0') : '0',
+          side: isAttending ? (formData.get('side') || '-') : '-',
+          diet: isAttending ? (formData.get('diet') || '-') : '-',
           wishes: formData.get('wishes') || '-'
         };
 
@@ -915,6 +908,9 @@
           statusBox.classList.add('success');
           statusBox.style.display = 'block';
           form.reset();
+          attendYes.classList.add('selected');
+          attendNo.classList.remove('selected');
+          toggleAttendanceFields(true);
 
           showToast(translations[state.currentLang].rsvpSuccess);
         } catch (err) {
@@ -1000,25 +996,67 @@
       });
     }
 
-    // Slip file preview
+    // Slip file preview & Client-side compression
     const slipFileInput = document.getElementById('slip-file');
     const slipPreviewBox = document.getElementById('slip-preview-box');
     const slipPreviewImg = document.getElementById('slip-preview-img');
     let slipBase64 = null;
     let slipMime = 'image/jpeg';
 
+    // บีบอัดรูปสลิปให้ขนาดประมาณ 150KB เพื่อส่งผ่าน Google Apps Script ได้ทันทีไม่หมดเวลา (No Timeout)
+    function compressSlipImage(file, maxWidth = 1200, maxHeight = 1200, quality = 0.82) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          const img = new Image();
+          img.onload = () => {
+            let width = img.width;
+            let height = img.height;
+            if (width > maxWidth || height > maxHeight) {
+              if (width / height > maxWidth / maxHeight) {
+                height = Math.round((height * maxWidth) / width);
+                width = maxWidth;
+              } else {
+                width = Math.round((width * maxHeight) / height);
+                height = maxHeight;
+              }
+            }
+            const canvas = document.createElement('canvas');
+            canvas.width = width;
+            canvas.height = height;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0, width, height);
+            const dataUrl = canvas.toDataURL('image/jpeg', quality);
+            resolve(dataUrl);
+          };
+          img.onerror = () => reject(new Error('Failed to load image'));
+          img.src = e.target.result;
+        };
+        reader.onerror = () => reject(new Error('Failed to read file'));
+        reader.readAsDataURL(file);
+      });
+    }
+
     if (slipFileInput) {
-      slipFileInput.addEventListener('change', (e) => {
+      slipFileInput.addEventListener('change', async (e) => {
         const file = e.target.files[0];
         if (file) {
-          slipMime = file.type || 'image/jpeg';
-          const reader = new FileReader();
-          reader.onload = (event) => {
-            slipBase64 = event.target.result;
+          try {
+            slipMime = 'image/jpeg';
+            slipBase64 = await compressSlipImage(file, 1200, 1200, 0.82);
             if (slipPreviewImg) slipPreviewImg.src = slipBase64;
             if (slipPreviewBox) slipPreviewBox.style.display = 'block';
-          };
-          reader.readAsDataURL(file);
+          } catch (err) {
+            console.warn('Canvas compression fallback:', err);
+            const reader = new FileReader();
+            reader.onload = (event) => {
+              slipBase64 = event.target.result;
+              slipMime = file.type || 'image/jpeg';
+              if (slipPreviewImg) slipPreviewImg.src = slipBase64;
+              if (slipPreviewBox) slipPreviewBox.style.display = 'block';
+            };
+            reader.readAsDataURL(file);
+          }
         }
       });
     }
@@ -1034,12 +1072,22 @@
         e.preventDefault();
 
         const name = document.getElementById('slip-sender-name')?.value.trim();
-        const amount = document.getElementById('slip-amount')?.value.trim();
+        const rawAmount = document.getElementById('slip-amount')?.value.trim();
         const message = document.getElementById('slip-message')?.value.trim();
 
         if (!slipBase64) {
           alert('กรุณาเลือกรูปภาพสลิปโอนเงิน');
           return;
+        }
+
+        let formattedAmount = "-";
+        if (rawAmount && rawAmount !== "") {
+          const cleanNum = rawAmount.replace(/,/g, "");
+          if (!isNaN(cleanNum) && cleanNum.trim() !== "") {
+            formattedAmount = Number(cleanNum).toLocaleString('th-TH');
+          } else {
+            formattedAmount = rawAmount;
+          }
         }
 
         slipSubmitBtn.disabled = true;
@@ -1049,9 +1097,9 @@
 
         const payload = {
           type: "slip_upload",
-          name: name,
-          amount: amount,
-          message: message,
+          name: name || "แขกผู้มีเกียรติ",
+          amount: formattedAmount,
+          message: message || "ขอแสดงความยินดีกับคู่บ่าวสาว",
           slipBase64: slipBase64,
           mimeType: slipMime
         };
@@ -1067,7 +1115,7 @@
           }
 
           if (message && message.trim() !== '') {
-            addWishToCarousel(name, message);
+            addWishToCarousel(payload.name, message);
           }
 
           slipStatusBox.textContent = translations[state.currentLang].slipSuccess;
