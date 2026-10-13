@@ -76,40 +76,43 @@
        1. ENVELOPE / OPENING SCREEN (หน้าแรก/หน้าปกการ์ดเชิญ: S__122060825_0.jpg)
        ======================================================================== -->
   <div id="envelope-screen" class="envelope-screen" role="dialog" aria-modal="true" aria-label="Wedding Envelope">
-    <!-- Immersive Fullscreen Cover using S__122060825_0.jpg -->
-    <div class="envelope-cover-bg" style="background-image: url('assets/images/cover.jpg');">
-      <div class="envelope-cover-overlay"></div>
-    </div>
-    
-    <div class="envelope-wrapper">
-      <!-- Top Decorative Ribbon/Ornament -->
-      <svg class="envelope-ornament-top" viewBox="0 0 160 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <path d="M10 20C40 5 60 35 80 20C100 5 120 35 150 20" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-        <circle cx="80" cy="20" r="4" fill="currentColor"/>
-        <path d="M72 15C76 10 84 10 88 15" stroke="currentColor" stroke-width="1.2"/>
-      </svg>
-
-      <!-- Guest Name Box (Extracted from ?to=...) -->
-      <div class="envelope-recipient-box">
-        <div class="envelope-recipient-label" data-i18n="envRecipientLabel">DEAR GUEST</div>
-        <div id="envelope-guest-name" class="envelope-recipient-name">เรียนแขกผู้มีเกียรติ</div>
+    <div class="envelope-screen-inner">
+      <!-- Eco Message Top Bar (สไตล์ MaiJack) -->
+      <div class="envelope-eco-bar">
+        <i class="fa-solid fa-leaf"></i>
+        <span>เพื่อเป็นการลดปริมาณการใช้กระดาษ ขอเรียนเชิญทุกท่านร่วมเป็นเกียรติในงานแต่งงานของเราผ่านการ์ดแต่งงานออนไลน์นี้</span>
       </div>
 
-      <div class="envelope-monogram" id="env-monogram">B &amp; K</div>
-      <div class="envelope-subtext" data-i18n="envInvitationTag">Wedding Invitation</div>
-      <div class="envelope-hashtag" id="env-hashtag">#BeauKimEverAfter</div>
+      <!-- Center Card Frame with Clean Couple Photo -->
+      <div class="envelope-card-frame">
+        <div class="envelope-card-image-wrap">
+          <img src="assets/images/cover.jpg" alt="Beau & Kim" class="envelope-card-photo">
+          <div class="envelope-card-overlay"></div>
+          
+          <div class="envelope-card-content">
+            <!-- Guest Name Box (Extracted from ?to=...) -->
+            <div class="envelope-recipient-box">
+              <div class="envelope-recipient-label" data-i18n="envRecipientLabel">DEAR GUEST</div>
+              <div id="envelope-guest-name" class="envelope-recipient-name">เรียนแขกผู้มีเกียรติ</div>
+            </div>
 
-      <!-- Wax Seal Button to Open Card & Play Music -->
-      <div class="wax-seal-wrapper">
-        <span class="wax-seal-pulse" aria-hidden="true"></span>
-        <button id="wax-seal-btn" class="wax-seal-btn" aria-label="แตะเพื่อเปิดการ์ดเชิญ">
-          <i class="fa-solid fa-envelope-open-text wax-seal-icon"></i>
-          <span class="wax-seal-text">OPEN</span>
+            <!-- Typography Overlay (สไตล์ MaiJack) -->
+            <div class="envelope-bottom-titles">
+              <div class="envelope-couple-names font-serif">NATTHIYA &amp; WUTTISAPAT</div>
+              <div class="envelope-date-badge">20 . 11 . 2026</div>
+              <div class="envelope-hashtag">#BeauKimEverAfter</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tap to Open Button -->
+      <div class="envelope-button-wrap">
+        <button id="wax-seal-btn" class="btn-tap-to-open" aria-label="แตะเพื่อเปิดการ์ดเชิญ">
+          <i class="fa-solid fa-envelope-open-text"></i>
+          <span>แตะเพื่อเปิดการ์ดเชิญ / Tap to Open</span>
         </button>
       </div>
-
-      <p class="envelope-instruction" data-i18n="envTapToOpen">แตะเพื่อเปิดการ์ดเชิญ</p>
-      <p class="envelope-instruction-sub">TAP TO OPEN INVITATION</p>
     </div>
   </div>
 
@@ -118,23 +121,38 @@
        ======================================================================== -->
   <main id="main-content" class="main-wrapper" style="opacity: 0; pointer-events: none; transition: opacity 0.8s ease;">
     
-    <!-- 2. SECTION 1: INVITATION CARD BACK (S__122060826_0.jpg - หน้าแรกหลังเปิดการ์ด) -->
-    <section id="card-hero" class="section-block" style="padding-top: 2rem;">
-      <div class="card-presentation-wrapper fade-up">
-        <div class="card-frame-outer">
-          <div class="card-frame-inner">
-            <img id="invitation-card-img" src="assets/images/card-back.jpg" alt="การ์ดเชิญพิธีมงคลสมรส Beau & Kim" class="invitation-card-real">
+    <!-- 2. SECTION 1: HERO SECTION (ขึ้นด้วยรูปบ่าวสาว เอาการ์ดกระดาษออก) -->
+    <section id="card-hero" class="section-block hero-presentation-sec" style="padding-top: 1.5rem;">
+      <div class="luxury-card hero-main-card fade-up">
+        <div class="hero-photo-wrapper">
+          <img id="hero-couple-img" src="assets/images/cover.jpg" alt="Beau & Kim Pre-Wedding" class="hero-couple-photo">
+          <div class="hero-photo-tag">
+            <span>WEDDING INVITATION</span>
           </div>
         </div>
-        <div class="card-action-bar">
-          <button id="btn-zoom-card" class="btn-card-action" aria-label="แตะเพื่อดูการ์ดขนาดเต็ม">
-            <i class="fa-solid fa-magnifying-glass-plus"></i> <span data-i18n="btnZoomCard">แตะเพื่อดูการ์ดขนาดเต็ม</span>
-          </button>
-        </div>
-        <div class="hero-hashtag-wrap">
-          <span class="hero-hashtag" id="hero-hashtag" title="คลิกเพื่อคัดลอกแฮชแท็ก">
-            <i class="fa-solid fa-hashtag"></i><span id="hero-hashtag-text">#BeauKimEverAfter</span>
-          </span>
+
+        <div class="hero-text-content">
+          <p class="hero-intro-text" data-i18n="heroGreeting">WE ARE GETTING MARRIED</p>
+          <h1 class="hero-couple-title font-serif">NATTHIYA &amp; WUTTISAPAT</h1>
+          <div class="hero-couple-thai">โบ (ณัฐฐิญา) &amp; คิม (วุฒศภัทร์)</div>
+
+          <div class="hero-divider-heart">
+            <span class="line"></span>
+            <i class="fa-solid fa-heart"></i>
+            <span class="line"></span>
+          </div>
+
+          <div class="hero-event-info">
+            <div class="hero-date-highlight">FRIDAY, 20 NOVEMBER 2026</div>
+            <div class="hero-time-highlight">18:00 - 22:00 น.</div>
+            <div class="hero-venue-highlight">ห้องคริสตัลแกรนด์บอลรูม ชั้น 1 โรงแรมคริสตัล หาดใหญ่</div>
+          </div>
+
+          <div class="hero-hashtag-wrap">
+            <span class="hero-hashtag" id="hero-hashtag" title="คลิกเพื่อคัดลอกแฮชแท็ก">
+              <i class="fa-solid fa-hashtag"></i><span id="hero-hashtag-text">BeauKimEverAfter</span>
+            </span>
+          </div>
         </div>
       </div>
     </section>
@@ -177,16 +195,16 @@
           </div>
         </div>
 
-        <!-- Calendar Integration Buttons (ย้ายมาใส่ใน Countdown Section ตามคำขอ) -->
+        <!-- Calendar Integration Buttons -->
         <div class="calendar-action-group">
           <a id="btn-google-cal" href="#" target="_blank" rel="noopener noreferrer" class="btn-luxury btn-rose">
             <i class="fa-brands fa-google"></i>
             <span data-i18n="btnGoogleCalendar">บันทึกลง Google Calendar</span>
           </a>
-          <button id="btn-download-ics" class="btn-luxury btn-outline">
-            <i class="fa-solid fa-calendar-plus"></i>
-            <span data-i18n="btnDownloadIcs">ดาวน์โหลดปฏิทิน (.ics สำหรับ iPhone)</span>
-          </button>
+          <a id="btn-apple-cal" href="wedding.ics" target="_blank" class="btn-luxury btn-outline">
+            <i class="fa-brands fa-apple"></i>
+            <span data-i18n="btnAppleCalendar">เพิ่มลงใน Apple Calendar (iPhone)</span>
+          </a>
         </div>
       </div>
     </section>
@@ -197,22 +215,45 @@
       <div class="divider-overlay"></div>
     </div>
 
-    <!-- 4. SECTION SCHEDULE TIMELINE (สไตล์ Journey to Marriage ตาม 9.png) -->
+    <!-- 4. SECTION WEDDING SCHEDULE (กำหนดการวันงาน) -->
     <section id="schedule" class="section-block alt-bg">
       <div class="luxury-card fade-up">
-        <!-- Decorative SVG Bow Ribbon matching 9.png -->
+        <div class="card-header-icon">
+          <i class="fa-regular fa-clock"></i>
+        </div>
+
+        <h2 class="section-title" data-i18n="scheduleTitle">Wedding Schedule</h2>
+        <p class="section-subtitle" data-i18n="scheduleSubtitle">กำหนดการพิธีมงคลสมรส</p>
+
+        <!-- Vertical Timeline for Schedule -->
+        <div class="journey-timeline" id="schedule-timeline-container">
+          <!-- Rendered dynamically from config.js -->
+        </div>
+      </div>
+    </section>
+
+    <!-- RANDOM DIVIDER 3 -->
+    <div class="random-image-divider">
+      <div class="divider-parallax-bg" style="background-image: url('assets/images/dividers/divider-3.jpg');"></div>
+      <div class="divider-overlay"></div>
+    </div>
+
+    <!-- 5. SECTION JOURNEY TO MARRIAGE (เรื่องราวความรัก แยกเป็นอีกหัวข้อ) -->
+    <section id="journey" class="section-block">
+      <div class="luxury-card fade-up">
+        <!-- Decorative SVG Bow Ribbon -->
         <svg class="journey-bow-header" viewBox="0 0 160 80" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
           <path d="M80 35C70 15 45 15 35 30C25 45 45 60 75 42L80 40L85 42C115 60 135 45 125 30C115 15 90 15 80 35Z" fill="#F8D8E8" stroke="#EB7FA8" stroke-width="2"/>
           <path d="M75 42C65 55 50 75 35 78M85 42C95 55 110 75 125 78" stroke="#EB7FA8" stroke-width="2.5" stroke-linecap="round"/>
           <circle cx="80" cy="38" r="7" fill="#EE3C8E"/>
         </svg>
 
-        <h2 class="journey-title" data-i18n="scheduleTitle">Wedding Schedule</h2>
+        <h2 class="journey-title" data-i18n="journeyTitle">Journey to Marriage</h2>
         <div class="journey-couple-script" id="journey-couple-names">Beau &amp; Kim</div>
-        <p class="section-subtitle" data-i18n="scheduleSubtitle">กำหนดการและเรื่องราววันสำคัญ</p>
+        <p class="section-subtitle" data-i18n="journeySubtitle">Our Love Story</p>
 
-        <!-- Vertical Timeline in Journey Style -->
-        <div class="journey-timeline" id="schedule-timeline-container">
+        <!-- Vertical Timeline in Journey Style (No Thai text) -->
+        <div class="journey-timeline" id="love-milestones-container">
           <!-- Rendered dynamically from config.js -->
         </div>
       </div>
@@ -274,9 +315,7 @@
         </div>
 
         <h2 class="section-title" data-i18n="dressCodeTitle">Dress Code</h2>
-        <p class="section-subtitle" data-i18n="dressCodeSubtitle">ธีมสีสำหรับแขกผู้มีเกียรติ</p>
-        <p class="dresscode-desc" id="dresscode-desc"></p>
-        <p class="dresscode-note" id="dresscode-note"></p>
+        <p class="section-subtitle" id="dresscode-desc">ธีมสำหรับชุดแต่งกาย</p>
 
         <!-- 6 Swatches (3 Green + 3 Pink) -->
         <div class="swatches-grid" id="dresscode-grid">
@@ -550,10 +589,6 @@
             <input type="text" id="slip-sender-name" name="name" class="form-control" placeholder="ระบุชื่อของท่าน" required>
           </div>
           <div class="form-group" style="text-align: left; margin-bottom: 0.8rem;">
-            <label for="slip-amount" class="form-label" style="font-size: 0.85rem;">จำนวนเงิน (บาท) <span style="font-weight:normal;color:#888;">(ไม่บังคับ)</span></label>
-            <input type="text" id="slip-amount" name="amount" inputmode="decimal" class="form-control" placeholder="เช่น 1,000 หรือ 500">
-          </div>
-          <div class="form-group" style="text-align: left; margin-bottom: 0.8rem;">
             <label for="slip-file" class="form-label" style="font-size: 0.85rem;">แนบรูปภาพสลิปโอนเงิน <span class="required">*</span></label>
             <input type="file" id="slip-file" name="slipFile" accept="image/*" class="form-control" required>
             <div id="slip-preview-box" class="slip-preview-container" style="display:none; margin-top: 0.5rem;">
@@ -625,16 +660,6 @@
     </div>
   </div>
 
-  <!-- CARD FULLSCREEN VIEWER MODAL -->
-  <div id="card-modal" class="lightbox-overlay" role="dialog" aria-modal="true" aria-label="Card Fullscreen">
-    <button id="btn-close-card-modal" class="lightbox-close" aria-label="Close Card View">
-      <i class="fa-solid fa-xmark"></i>
-    </button>
-    <div class="lightbox-img-wrapper">
-      <img src="assets/images/card-back.jpg" alt="การ์ดแต่งงาน Beau & Kim ขนาดเต็ม" style="max-height: 90vh;">
-    </div>
-  </div>
-
   <!-- BOTTOM NAVIGATION BAR (FOR MOBILE & TABLET) -->
   <nav class="bottom-nav-bar" aria-label="Bottom Navigation">
     <a href="#card-hero" class="bottom-nav-item active">
@@ -648,6 +673,10 @@
     <a href="#schedule" class="bottom-nav-item">
       <i class="fa-regular fa-clock"></i>
       <span data-i18n="navSchedule">กำหนดการ</span>
+    </a>
+    <a href="#journey" class="bottom-nav-item">
+      <i class="fa-solid fa-heart"></i>
+      <span>เรื่องราว</span>
     </a>
     <a href="#location" class="bottom-nav-item">
       <i class="fa-solid fa-map-location-dot"></i>

@@ -1,0 +1,21 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//BeauKimWedding//TH
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+BEGIN:VEVENT
+UID:wedding-beau-kim-20261120@bkwedding.vercel.app
+DTSTAMP:20261013T120000Z
+SUMMARY:งานฉลองมงคลสมรส โบ & คิม (#BeauKimEverAfter)
+DESCRIPTION:*ขอเรียนเชิญร่วมงานฉลองมงคลสมรสระหว่าง โบ (ณัฐฐิญา มณีโชคชูโรจน์) & คิม (วุฒศภัทร์ ปราศภัย) ณ ห้องคริสตัลแกรนด์บอลรูม ชั้น 1 โรงแรมคริสตัล หาดใหญ่
+LOCATION:ห้องคริสตัลแกรนด์บอลรูม ชั้น 1 โรงแรมคริสตัล หาดใหญ่
+DTSTART:20261120T110000Z
+DTEND:20261120T150000Z
+STATUS:CONFIRMED
+BEGIN:VALARM
+TRIGGER:-PT24H
+ACTION:DISPLAY
+DESCRIPTION:เตือนความจำ: งานฉลองมงคลสมรส โบ & คิม วันพรุ่งนี้
+END:VALARM
+END:VEVENT
+END:VCALENDAR

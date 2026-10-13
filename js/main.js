@@ -52,9 +52,12 @@
       cdMinutes: "นาที",
       cdEventStarted: "วันนี้คือวันสำคัญของเรา",
       btnGoogleCalendar: "บันทึกลง Google Calendar",
+      btnAppleCalendar: "เพิ่มลงใน Apple Calendar (iPhone)",
       btnDownloadIcs: "ดาวน์โหลดปฏิทิน (.ics สำหรับ iPhone)",
       scheduleTitle: "Wedding Schedule",
-      scheduleSubtitle: "กำหนดการและเรื่องราววันสำคัญ",
+      scheduleSubtitle: "กำหนดการพิธีมงคลสมรส",
+      journeyTitle: "Journey to Marriage",
+      journeySubtitle: "Our Love Story",
       venueTitle: "Wedding Venue",
       venueSubtitle: "สถานที่จัดงานและแผนที่การเดินทาง",
       btnNavGoogleMaps: "เปิดแผนที่ Google Maps",
@@ -112,9 +115,12 @@
       cdMinutes: "Minutes",
       cdEventStarted: "Today is our special day!",
       btnGoogleCalendar: "Save to Google Calendar",
+      btnAppleCalendar: "Add to Apple Calendar (iPhone)",
       btnDownloadIcs: "Download Calendar (.ics for iPhone)",
       scheduleTitle: "Wedding Schedule",
-      scheduleSubtitle: "Schedule of Events & Milestones",
+      scheduleSubtitle: "Wedding Schedule & Times",
+      journeyTitle: "Journey to Marriage",
+      journeySubtitle: "Our Love Story",
       venueTitle: "Wedding Venue",
       venueSubtitle: "Location and Directions",
       btnNavGoogleMaps: "Open in Google Maps",
@@ -212,7 +218,11 @@
     // Monogram & Hashtags
     setText('env-monogram', WEDDING_CONFIG.couple.monogram);
     setText('env-hashtag', WEDDING_CONFIG.couple.hashtag);
-    setText('hero-hashtag-text', WEDDING_CONFIG.couple.hashtag);
+    
+    // Ensure only single # is shown in hero
+    const cleanTag = WEDDING_CONFIG.couple.hashtag.replace(/^#+/, '');
+    setText('hero-hashtag-text', cleanTag);
+
     setText('journey-couple-names', WEDDING_CONFIG.couple.shortNamesEn);
     setText('footer-names', `${WEDDING_CONFIG.couple.shortNamesEn} Wedding`);
     setText('footer-date', WEDDING_CONFIG.date.displayDateEn);
@@ -220,8 +230,11 @@
     // Venue Info
     renderVenueInfo();
 
-    // Schedule Timeline in Journey Style
+    // Schedule Timeline
     renderScheduleTimeline();
+
+    // Love Milestones (Journey to Marriage)
+    renderLoveMilestones();
 
     // Contact Persons with Photos
     renderContactsWithPortraits();
@@ -280,6 +293,24 @@
     }).join('');
 
     container.innerHTML = scheduleItemsHtml;
+  }
+
+  // Love Milestones (Journey to Marriage - ไม่มีคำบรรยายภาษาไทยตามคำขอ)
+  function renderLoveMilestones() {
+    const container = document.getElementById('love-milestones-container');
+    if (!container) return;
+
+    container.innerHTML = WEDDING_CONFIG.loveMilestones.map(item => `
+      <div class="journey-item">
+        <div class="journey-node-icon">
+          <i class="${item.icon}"></i>
+        </div>
+        <div class="journey-content">
+          <div class="journey-date">${item.date}</div>
+          <div class="journey-event-title">${item.title}</div>
+        </div>
+      </div>
+    `).join('');
   }
 
   // Contact Persons with Portraits (โบ & คิม) พร้อมปุ่มโทรและ Facebook
@@ -526,47 +557,21 @@
   // ----------------------------------------------------------------------------
   function initCalendarIntegration() {
     const googleCalBtn = document.getElementById('btn-google-cal');
-    const icsBtn = document.getElementById('btn-download-ics');
+    const appleCalBtn = document.getElementById('btn-apple-cal');
 
-    const title = encodeURIComponent(`งานฉลองมงคลสมรส Beau & Kim (#BeauKimEverAfter)`);
-    const details = encodeURIComponent(`ขอเรียนเชิญร่วมงานฉลองมงคลสมรสระหว่าง โบ (ณัฐฐิญา มณีโชคชูโรจน์) & คิม (วุฒิศภัทร์ ปราศภัย) ณ ห้องคริสตัลแกรนด์บอลรูม ชั้น 1 โรงแรมคริสตัล หาดใหญ่`);
+    const title = encodeURIComponent(`งานฉลองมงคลสมรส โบ & คิม (#BeauKimEverAfter)`);
+    const details = encodeURIComponent(`*ขอเรียนเชิญร่วมงานฉลองมงคลสมรสระหว่าง โบ (ณัฐฐิญา มณีโชคชูโรจน์) & คิม (วุฒศภัทร์ ปราศภัย) ณ ห้องคริสตัลแกรนด์บอลรูม ชั้น 1 โรงแรมคริสตัล หาดใหญ่`);
     const location = encodeURIComponent(`ห้องคริสตัลแกรนด์บอลรูม ชั้น 1 โรงแรมคริสตัล หาดใหญ่`);
-    const dates = "20261120T010900Z/20261120T150000Z";
+    // วันที่ 20 พ.ย. 2569 เวลา 18:00 - 22:00 น. (11:00Z - 15:00Z)
+    const dates = "20261120T110000Z/20261120T150000Z";
     const googleCalUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${dates}&details=${details}&location=${location}`;
 
     if (googleCalBtn) {
       googleCalBtn.href = googleCalUrl;
     }
 
-    if (icsBtn) {
-      icsBtn.addEventListener('click', () => {
-        const icsContent = [
-          "BEGIN:VCALENDAR",
-          "VERSION:2.0",
-          "PRODID:-//BeauKimWedding//TH",
-          "CALSCALE:GREGORIAN",
-          "METHOD:PUBLISH",
-          "BEGIN:VEVENT",
-          "SUMMARY:งานฉลองมงคลสมรส Beau & Kim (#BeauKimEverAfter)",
-          "DESCRIPTION:ขอเรียนเชิญร่วมงานฉลองมงคลสมรสระหว่าง โบ & คิม ณ โรงแรมคริสตัล หาดใหญ่",
-          "LOCATION:ห้องคริสตัลแกรนด์บอลรูม ชั้น 1 โรงแรมคริสตัล หาดใหญ่",
-          "DTSTART:20261120T010900Z",
-          "DTEND:20261120T150000Z",
-          "STATUS:CONFIRMED",
-          "END:VEVENT",
-          "END:VCALENDAR"
-        ].join("\r\n");
-
-        const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8;' });
-        const link = document.createElement('a');
-        link.href = URL.createObjectURL(blob);
-        link.setAttribute('download', 'BeauKim_Wedding_20Nov2026.ics');
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-
-        showToast(translations[state.currentLang].toastCopied);
-      });
+    if (appleCalBtn) {
+      appleCalBtn.href = "wedding.ics";
     }
   }
 
@@ -582,7 +587,11 @@
 
     const isTh = state.currentLang === 'th';
     if (descEl) descEl.textContent = isTh ? WEDDING_CONFIG.dressCode.descriptionTh : WEDDING_CONFIG.dressCode.descriptionEn;
-    if (noteEl) noteEl.textContent = isTh ? WEDDING_CONFIG.dressCode.noteTh : WEDDING_CONFIG.dressCode.noteEn;
+    if (noteEl) {
+      const noteText = isTh ? WEDDING_CONFIG.dressCode.noteTh : WEDDING_CONFIG.dressCode.noteEn;
+      noteEl.textContent = noteText || '';
+      noteEl.style.display = noteText ? 'block' : 'none';
+    }
 
     grid.innerHTML = WEDDING_CONFIG.dressCode.colors.map(c => {
       const name = isTh ? c.nameTh : c.nameEn;

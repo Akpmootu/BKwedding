@@ -20,7 +20,7 @@ const WEDDING_CONFIG = {
       phoneRaw: "0911051074"
     },
     groom: {
-      fullNameTh: "นายวุฒิศภัทร์ ปราศภัย",
+      fullNameTh: "นายวุฒศภัทร์ ปราศภัย",
       fullNameEn: "Wuttisapat Prasapai",
       nickNameTh: "คิม",
       nickNameEn: "Kim",
@@ -40,8 +40,8 @@ const WEDDING_CONFIG = {
   siteUrl: "https://bkwedding.vercel.app", // เปลี่ยนเป็นโดเมนจริงของคุณหากแตกต่างจากนี้
   ogImage: "https://bkwedding.vercel.app/assets/images/og-image.jpg",
   cards: {
-    frontCover: "assets/images/cover.jpg",      // S__122060825_0.jpg (รูปบ่าวสาวในสนามหญ้าพร้อม nw 20 . 11 . 26)
-    backCard: "assets/images/card-back.jpg"     // S__122060826_0.jpg (การ์ดแผ่นหลังทางการ แสดงหลังเปิดซอง)
+    frontCover: "assets/images/cover.jpg",      // รูปบ่าวสาวในสนามหญ้า (ไม่มีตัวหนังสือ)
+    backCard: "assets/images/card-back.jpg"
   },
 
   // ----------------------------------------------------------------------------
@@ -62,7 +62,7 @@ const WEDDING_CONFIG = {
   // 4. วัน เวลา และกำหนดการ (DATE & COUNTDOWN)
   // ----------------------------------------------------------------------------
   date: {
-    isoDateTime: "2026-11-20T08:09:00+07:00",
+    isoDateTime: "2026-11-20T18:00:00+07:00",
     endIsoDateTime: "2026-11-20T22:00:00+07:00",
     displayDateTh: "วันศุกร์ที่ 20 พฤศจิกายน 2569",
     displayDateEn: "Friday, 20 November 2026",
@@ -71,25 +71,25 @@ const WEDDING_CONFIG = {
     yearNum: "26"
   },
 
-  // กำหนดการวันงาน (ใช้ลักษณะ Timeline สไตล์ Journey to Marriage ตาม 9.png)
+  // กำหนดการวันงาน (Wedding Schedule)
   scheduleTimeline: [
     {
       timeTh: "08.09 น.",
       timeEn: "08:09 AM",
-      titleTh: "พิธีแห่ขันหมาก & พิธีหมั้น",
-      titleEn: "Khan Mak Procession & Engagement",
-      descTh: "ร่วมตั้งขบวนแห่ขันหมากและร่วมเป็นสักขีพยานในพิธีสวมแหวนหมั้นอันเป็นมงคล",
-      descEn: "Traditional Khan Mak procession followed by sacred ring exchange ceremony",
+      titleTh: "พิธีแห่ขันหมาก",
+      titleEn: "Khan Mak Procession",
+      descTh: "ตั้งขบวนแห่ขันหมากและเป็นสักขีพยานในพิธีมงคล",
+      descEn: "Traditional Khan Mak procession and blessed union ceremony",
       icon: "fa-solid fa-ring",
       tag: "เช้า"
     },
     {
-      timeTh: "09.39 น.",
-      timeEn: "09:39 AM",
+      timeTh: "11.09 น.",
+      timeEn: "11:09 AM",
       titleTh: "พิธีหลั่งน้ำพระพุทธมนต์",
       titleEn: "Water Pouring Ceremony",
-      descTh: "ร่วมอวยพรและหลั่งน้ำพระพุทธมนต์ประสาทพรแก่คู่บ่าวสาว",
-      descEn: "Traditional water pouring ceremony with heartfelt blessings from guests",
+      descTh: "อวยพรและหลั่งน้ำพระพุทธมนต์ประสาทพรแก่คู่บ่าวสาว",
+      descEn: "Traditional water pouring ceremony with heartfelt blessings",
       icon: "fa-solid fa-hands-praying",
       tag: "เช้า"
     },
@@ -98,7 +98,7 @@ const WEDDING_CONFIG = {
       timeEn: "06:00 PM",
       titleTh: "ฉลองพิธีมงคลสมรส",
       titleEn: "Wedding Reception",
-      descTh: "ร่วมรับประทานอาหารค่ำ ร่วมถ่ายภาพเป็นที่ระลึก และเฉลิมฉลองค่ำคืนแห่งความสุข",
+      descTh: "รับประทานอาหารค่ำ ถ่ายภาพเป็นที่ระลึก และเฉลิมฉลองค่ำคืนแห่งความสุข",
       descEn: "Grand celebration with dinner, photo opportunities, and joyful toasts",
       icon: "fa-solid fa-champagne-glasses",
       tag: "เย็น"
@@ -108,30 +108,30 @@ const WEDDING_CONFIG = {
   // เรื่องราวความรัก (Journey to Marriage)
   loveMilestones: [
     {
-      date: "08 August 2016",
+      date: "10 October 2016",
       title: "First Met at Top Glove Technology",
-      descTh: "จุดเริ่มต้นของพรหมลิขิต ณ Top Glove Technology",
+      descTh: "",
       descEn: "Where our paths first crossed at Top Glove Technology",
       icon: "fa-solid fa-mug-hot"
     },
     {
       date: "17 October 2021",
       title: "First Date",
-      descTh: "เดทแรกที่เต็มไปด้วยรอยยิ้ม ความอบอุ่น และการเริ่มต้นความสัมพันธ์",
+      descTh: "",
       descEn: "Our very first official date filled with smiles and warmth",
       icon: "fa-solid fa-heart"
     },
     {
       date: "14 February 2026",
       title: "The Proposal",
-      descTh: "วันวาเลนไทน์ที่ตอบตกลง 'Yes, I do' เพื่อก้าวไปสู่อนาคตร่วมกัน",
+      descTh: "",
       descEn: "Valentine's Day proposal - She said 'Yes' to our forever",
       icon: "fa-solid fa-gem"
     },
     {
       date: "20 November 2026",
       title: "Wedding Day",
-      descTh: "วันสำคัญของการเริ่มต้นชีวิตคู่ 'Beau & Kim Ever After'",
+      descTh: "",
       descEn: "The beginning of our new chapter as Mr. & Mrs.",
       icon: "fa-solid fa-dove"
     }
@@ -157,10 +157,10 @@ const WEDDING_CONFIG = {
   // 6. ธีมการแต่งกาย (DRESS CODE - 6 เฉดสี เขียว 3 + ชมพู 3)
   // ----------------------------------------------------------------------------
   dressCode: {
-    descriptionTh: "เพื่อความสวยงามและเป็นโทนเดียวกันในภาพถ่าย ขอความกรุณาแขกผู้มีเกียรติร่วมแต่งกายในโทนสีธรรมชาติ (เขียว & ชมพู)",
-    descriptionEn: "To create harmonious memories, we warmly invite you to dress in our lovely botanical theme (Green & Pink)",
-    noteTh: "(ขอความกรุณาละเว้นชุดสีขาวล้วน)",
-    noteEn: "(Kindly refrain from wearing all-white attire)",
+    descriptionTh: "ธีมสำหรับชุดแต่งกาย",
+    descriptionEn: "Theme for Attire",
+    noteTh: "",
+    noteEn: "",
     colors: [
       { nameTh: "เขียวเข้ม", nameEn: "Forest Sage", hex: "#94A788" },
       { nameTh: "เขียวกลาง", nameEn: "Olive Mist", hex: "#BDCEAF" },
@@ -221,7 +221,7 @@ const WEDDING_CONFIG = {
   },
 
   // ----------------------------------------------------------------------------
-  // 10. แกลเลอรีรูปภาพ (PRE-WEDDING GALLERY) - 22 รูปจากโฟลเดอร์ pre-wedding
+  // 10. แกลเลอรีรูปภาพ (PRE-WEDDING GALLERY) - 19 รูปคู่จากโฟลเดอร์ pre-wedding
   // ----------------------------------------------------------------------------
   gallery: {
     externalDriveLink: "https://drive.google.com/drive/folders/1ajeP3p77gKAUvJE4ItCNYSY3gZnXvpRA",
@@ -229,25 +229,22 @@ const WEDDING_CONFIG = {
       { id: "p01", src: "assets/images/gallery/photo-01.jpg", captionTh: "รอยยิ้มแรกแห่งความสุข วันที่หัวใจตรงกัน", captionEn: "The smile of pure happiness" },
       { id: "p02", src: "assets/images/gallery/photo-02.jpg", captionTh: "ท่ามกลางธรรมชาติ สายลม และความรัก", captionEn: "Surrounded by nature, breeze and love" },
       { id: "p03", src: "assets/images/gallery/photo-03.jpg", captionTh: "มือคู่นี้ที่จะจับกันตลอดไป", captionEn: "Hands that hold forever" },
-      { id: "p04", src: "assets/images/gallery/photo-04.jpg", captionTh: "ความสุขที่สะท้อนผ่านแววตา", captionEn: "Joy reflected in each other's eyes" },
-      { id: "p05", src: "assets/images/gallery/photo-05.jpg", captionTh: "ทุกช่วงเวลาที่ได้อยู่เคียงข้าง", captionEn: "Every moment by your side" },
-      { id: "p06", src: "assets/images/gallery/photo-06.jpg", captionTh: "รอยยิ้มและความอบอุ่นในใจ", captionEn: "Warmth and smiles within" },
-      { id: "p07", src: "assets/images/gallery/photo-07.jpg", captionTh: "ความรักที่เติบโตขึ้นทุกวัน", captionEn: "Love growing day by day" },
-      { id: "p08", src: "assets/images/gallery/photo-08.jpg", captionTh: "ก้าวไปด้วยกันในทุกเส้นทาง", captionEn: "Walking together through every path" },
-      { id: "p09", src: "assets/images/gallery/photo-09.jpg", captionTh: "สายตาแห่งความเข้าใจและผูกพัน", captionEn: "Eyes filled with love and understanding" },
-      { id: "p10", src: "assets/images/gallery/photo-10.jpg", captionTh: "ความรักที่เรียบง่ายแต่ลึกซึ้ง", captionEn: "Simple yet profound love" },
-      { id: "p11", src: "assets/images/gallery/photo-11.jpg", captionTh: "วันที่หัวเราะไปด้วยกัน", captionEn: "Days filled with laughter" },
-      { id: "p12", src: "assets/images/gallery/photo-12.jpg", captionTh: "ความทรงจำที่แสนงดงาม", captionEn: "A truly beautiful memory" },
-      { id: "p13", src: "assets/images/gallery/photo-13.jpg", captionTh: "คำมั่นสัญญาแห่งรัก", captionEn: "A promise of forever" },
-      { id: "p14", src: "assets/images/gallery/photo-14.jpg", captionTh: "ความอบอุ่นในทุกสัมผัส", captionEn: "Warmth in every touch" },
-      { id: "p15", src: "assets/images/gallery/photo-15.jpg", captionTh: "ทุกวันที่ผ่านมาร่วมกัน", captionEn: "Every yesterday and tomorrow" },
-      { id: "p16", src: "assets/images/gallery/photo-16.jpg", captionTh: "สายลม แสงแดด และสองเรา", captionEn: "Sunlight, breeze, and just the two of us" },
-      { id: "p17", src: "assets/images/gallery/photo-17.jpg", captionTh: "ความสุขที่แท้จริงคือการมีเธอ", captionEn: "True happiness is having you" },
-      { id: "p18", src: "assets/images/gallery/photo-18.jpg", captionTh: "เริ่มต้นบทใหม่ของชีวิตคู่", captionEn: "A brand new chapter begins" },
-      { id: "p19", src: "assets/images/gallery/photo-19.jpg", captionTh: "รอยยิ้มที่สว่างไสวที่สุด", captionEn: "Our brightest smiles together" },
-      { id: "p20", src: "assets/images/gallery/photo-20.jpg", captionTh: "เธอคือของขวัญที่ดีที่สุด", captionEn: "You are the greatest blessing" },
-      { id: "p21", src: "assets/images/gallery/photo-21.jpg", captionTh: "ความสนุกและเสียงหัวเราะ", captionEn: "Joy, fun and heartfelt laughter" },
-      { id: "p22", src: "assets/images/gallery/photo-22.jpg", captionTh: "Beau & Kim Ever After", captionEn: "Beau & Kim Ever After" }
+      { id: "p04", src: "assets/images/gallery/photo-04.jpg", captionTh: "ก้าวไปด้วยกันในทุกเส้นทาง", captionEn: "Walking together through every path" },
+      { id: "p05", src: "assets/images/gallery/photo-05.jpg", captionTh: "สายตาแห่งความเข้าใจและผูกพัน", captionEn: "Eyes filled with love and understanding" },
+      { id: "p06", src: "assets/images/gallery/photo-06.jpg", captionTh: "ความทรงจำที่แสนงดงาม", captionEn: "A truly beautiful memory" },
+      { id: "p07", src: "assets/images/gallery/photo-07.jpg", captionTh: "คำมั่นสัญญาแห่งรัก", captionEn: "A promise of forever" },
+      { id: "p08", src: "assets/images/gallery/photo-08.jpg", captionTh: "ความอบอุ่นในทุกสัมผัส", captionEn: "Warmth in every touch" },
+      { id: "p09", src: "assets/images/gallery/photo-09.jpg", captionTh: "สายลม แสงแดด และสองเรา", captionEn: "Sunlight, breeze, and just the two of us" },
+      { id: "p10", src: "assets/images/gallery/photo-10.jpg", captionTh: "ความสุขที่แท้จริงคือการมีเธอ", captionEn: "True happiness is having you" },
+      { id: "p11", src: "assets/images/gallery/photo-11.jpg", captionTh: "เริ่มต้นบทใหม่ของชีวิตคู่", captionEn: "A brand new chapter begins" },
+      { id: "p12", src: "assets/images/gallery/photo-12.jpg", captionTh: "ทุกช่วงเวลาที่ได้อยู่เคียงข้าง", captionEn: "Every moment by your side" },
+      { id: "p13", src: "assets/images/gallery/photo-13.jpg", captionTh: "รอยยิ้มที่สว่างไสวที่สุด", captionEn: "Our brightest smiles together" },
+      { id: "p14", src: "assets/images/gallery/photo-14.jpg", captionTh: "ความรักที่เรียบง่ายแต่ลึกซึ้ง", captionEn: "Simple yet profound love" },
+      { id: "p15", src: "assets/images/gallery/photo-15.jpg", captionTh: "ความสนุกและเสียงหัวเราะ", captionEn: "Joy, fun and heartfelt laughter" },
+      { id: "p16", src: "assets/images/gallery/photo-16.jpg", captionTh: "เธอคือของขวัญที่ดีที่สุด", captionEn: "You are the greatest blessing" },
+      { id: "p17", src: "assets/images/gallery/photo-17.jpg", captionTh: "ช่วงเวลาแสนหวานร่วมกัน", captionEn: "Sweet moments spent together" },
+      { id: "p18", src: "assets/images/gallery/photo-18.jpg", captionTh: "ความทรงจำโฟโต้บูธแสนน่ารัก", captionEn: "Cute photobooth memories" },
+      { id: "p19", src: "assets/images/gallery/photo-19.jpg", captionTh: "รอยยิ้มที่มีให้กันเสมอ", captionEn: "Endless smiles together" }
     ]
   },
 
