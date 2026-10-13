@@ -52,8 +52,8 @@
     <source src="assets/music/enchanted.mp3" type="audio/mpeg">
   </audio>
 
-  <!-- Hidden Container for YouTube Background Audio Fallback -->
-  <div id="youtube-audio-container" style="position:fixed;top:-9999px;left:-9999px;opacity:0;pointer-events:none;" aria-hidden="true"></div>
+  <!-- Container for YouTube Background Audio Fallback -->
+  <div id="youtube-audio-container" style="position:fixed;bottom:0;right:0;width:1px;height:1px;opacity:0.01;pointer-events:none;z-index:-1;" aria-hidden="true"></div>
 
   <!-- Toast Notification Box -->
   <div id="toast-notice" class="toast-notice" role="alert" aria-live="polite">

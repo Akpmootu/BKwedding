@@ -349,6 +349,15 @@
       setTimeout(() => {
         document.querySelectorAll('.fade-up').forEach(el => el.classList.add('visible'));
       }, 100);
+
+      // Mobile first interaction audio unlock if opened directly
+      const unlockAudio = () => {
+        if (!state.isMusicPlaying) {
+          playMusic();
+        }
+        ['click', 'touchstart'].forEach(evt => document.removeEventListener(evt, unlockAudio));
+      };
+      ['click', 'touchstart'].forEach(evt => document.addEventListener(evt, unlockAudio, { once: true, passive: true }));
     }
 
     openBtn.addEventListener('click', () => {
@@ -415,8 +424,8 @@
 
     if (audioEl) {
       audioEl.addEventListener('error', () => {
+        console.warn('Local audio element encountered an error, falling back to YouTube engine.');
         state.audioSource = 'youtube';
-        setupYouTubeAudio();
       });
     }
   }
@@ -426,19 +435,25 @@
     const musicBtn = document.getElementById('music-floating-btn');
 
     if (state.audioSource === 'local' && audioEl) {
-      audioEl.play().then(() => {
-        state.isMusicPlaying = true;
-        if (musicBtn) musicBtn.classList.add('playing');
-      }).catch(() => {
-        state.audioSource = 'youtube';
-        setupYouTubeAudio();
-      });
+      const playPromise = audioEl.play();
+      if (playPromise !== undefined) {
+        playPromise.then(() => {
+          state.isMusicPlaying = true;
+          if (musicBtn) musicBtn.classList.add('playing');
+        }).catch((err) => {
+          console.warn('Audio play request blocked or failed, trying YouTube fallback:', err);
+          state.audioSource = 'youtube';
+          setupYouTubeAudio();
+        });
+      }
     } else if (state.audioSource === 'youtube') {
       const ytFrame = document.getElementById('yt-audio-iframe');
-      if (ytFrame) {
+      if (ytFrame && ytFrame.contentWindow) {
         ytFrame.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
         state.isMusicPlaying = true;
         if (musicBtn) musicBtn.classList.add('playing');
+      } else {
+        setupYouTubeAudio();
       }
     }
   }
@@ -451,7 +466,7 @@
       audioEl.pause();
     } else if (state.audioSource === 'youtube') {
       const ytFrame = document.getElementById('yt-audio-iframe');
-      if (ytFrame) {
+      if (ytFrame && ytFrame.contentWindow) {
         ytFrame.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
       }
     }
@@ -462,15 +477,22 @@
 
   function setupYouTubeAudio() {
     const container = document.getElementById('youtube-audio-container');
-    if (!container || document.getElementById('yt-audio-iframe')) return;
+    if (!container) return;
 
     const videoId = WEDDING_CONFIG.music.youtubeVideoId || 'igIfiqqVHtA';
-    container.innerHTML = `
-      <iframe id="yt-audio-iframe" 
-        src="https://www.youtube-nocookie.com/embed/${videoId}?enablejsapi=1&autoplay=1&loop=1&playlist=${videoId}&playsinline=1" 
-        allow="autoplay">
-      </iframe>
-    `;
+    if (!document.getElementById('yt-audio-iframe')) {
+      container.innerHTML = `
+        <iframe id="yt-audio-iframe" 
+          src="https://www.youtube-nocookie.com/embed/${videoId}?enablejsapi=1&autoplay=1&loop=1&playlist=${videoId}&playsinline=1" 
+          allow="autoplay; encrypted-media">
+        </iframe>
+      `;
+    } else {
+      const ytFrame = document.getElementById('yt-audio-iframe');
+      if (ytFrame && ytFrame.contentWindow) {
+        ytFrame.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+      }
+    }
 
     const musicBtn = document.getElementById('music-floating-btn');
     state.isMusicPlaying = true;
