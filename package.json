@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "E-Wedding Card for Beau & Kim",
   "scripts": {
+    "build": "echo 'Build complete'",
     "dev": "node dev-server.js"
   },
   "keywords": [],
