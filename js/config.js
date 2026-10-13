@@ -12,7 +12,7 @@ const WEDDING_CONFIG = {
   couple: {
     bride: {
       fullNameTh: "นางสาวณัฐฐิญา มณีโชคชูโรจน์",
-      fullNameEn: "Natthiya Maneechokchuroj",
+      fullNameEn: "Nattiya Maneechokchuroj",
       nickNameTh: "โบ",
       nickNameEn: "Beau",
       photo: "assets/images/bride-contact.jpg",
@@ -21,7 +21,7 @@ const WEDDING_CONFIG = {
     },
     groom: {
       fullNameTh: "นายวุฒศภัทร์ ปราศภัย",
-      fullNameEn: "Wuttisapat Prasapai",
+      fullNameEn: "Wutsapat Pradpai",
       nickNameTh: "คิม",
       nickNameEn: "Kim",
       photo: "assets/images/groom-contact.jpg",
@@ -182,7 +182,7 @@ const WEDDING_CONFIG = {
     bankNameTh: "ธนาคารกรุงศรีอยุธยา (BAY)",
     bankNameEn: "Bank of Ayudhya (Krungsri)",
     accountNameTh: "น.ส. ณัฐฐิญา มณีโชคชูโรจน์",
-    accountNameEn: "Ms. Natthiya Maneechokchuroj",
+    accountNameEn: "Ms. Nattiya Maneechokchuroj",
     promptPayNumber: "1-9098-00774-90-4",
     promptPayRaw: "1909800774904",
     qrImage: "assets/images/qr-promptpay.jpg"
