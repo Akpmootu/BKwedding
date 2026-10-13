@@ -83,35 +83,28 @@
     </div>
 
     <div class="envelope-screen-inner">
-      <!-- Eco Message Top Bar (สไตล์ MaiJack) -->
-      <div class="envelope-eco-bar">
-        <i class="fa-solid fa-leaf"></i>
-        <span>เพื่อเป็นการลดปริมาณการใช้กระดาษ ขอเรียนเชิญทุกท่านร่วมเป็นเกียรติในงานแต่งงานของเราผ่านการ์ดแต่งงานออนไลน์นี้</span>
-      </div>
-
-      <!-- Center & Recipient Typography (Fullscreen Floating) -->
-      <div class="envelope-center-content">
+      <!-- Top Header Area (Positioned in Sky Area, Zero Face Overlap) -->
+      <div class="envelope-header-area">
         <!-- Guest Name Box (Extracted from ?to=...) -->
         <div class="envelope-recipient-box">
           <div class="envelope-recipient-label" data-i18n="envRecipientLabel">DEAR GUEST</div>
           <div id="envelope-guest-name" class="envelope-recipient-name">เรียนแขกผู้มีเกียรติ</div>
         </div>
 
-        <!-- Typography Overlay (สไตล์ MaiJack) -->
-        <div class="envelope-bottom-titles">
+        <!-- Typography in Upper Sky Area (No Nicknames/Parentheses on Cover) -->
+        <div class="envelope-titles-wrap">
           <p class="envelope-sub-intro">THE WEDDING OF</p>
           <div class="envelope-couple-names font-serif">NATTIYA &amp; WUTSAPAT</div>
-          <div class="envelope-couple-thai">โบ (ณัฐฐิญา) &amp; คิม (วุฒศภัทร์)</div>
           <div class="envelope-date-badge">20 . 11 . 2026</div>
           <div class="envelope-hashtag">#BeauKimEverAfter</div>
         </div>
       </div>
 
-      <!-- Tap to Open Button (Fixed at Bottom with Glow) -->
+      <!-- Tap to Open Button (Fixed at Bottom with Luxury Glow) -->
       <div class="envelope-button-wrap">
-        <button id="wax-seal-btn" class="btn-tap-to-open" aria-label="แตะเพื่อเปิดการ์ดเชิญ">
-          <i class="fa-solid fa-envelope-open-text"></i>
-          <span>แตะเพื่อเปิดการ์ดเชิญ / Tap to Open</span>
+        <button id="wax-seal-btn" class="btn-tap-to-open btn-premium-open" aria-label="เปิดการ์ด">
+          <i class="fa-solid fa-envelope-open"></i>
+          <span>เปิดการ์ด</span>
         </button>
       </div>
     </div>
@@ -122,20 +115,16 @@
        ======================================================================== -->
   <main id="main-content" class="main-wrapper" style="opacity: 0; pointer-events: none; transition: opacity 0.8s ease;">
     
-    <!-- 2. SECTION 1: HERO SECTION (ขึ้นด้วยรูปบ่าวสาว เอาการ์ดกระดาษออก) -->
+    <!-- 2. SECTION 1: HERO SECTION -->
     <section id="card-hero" class="section-block hero-presentation-sec" style="padding-top: 1.5rem;">
       <div class="luxury-card hero-main-card fade-up">
         <div class="hero-photo-wrapper">
-          <img id="hero-couple-img" src="assets/images/cover.jpg" alt="Beau & Kim Pre-Wedding" class="hero-couple-photo">
-          <div class="hero-photo-tag">
-            <span>WEDDING INVITATION</span>
-          </div>
+          <img id="hero-couple-img" src="assets/images/hero-couple.jpg" alt="Beau & Kim Pre-Wedding" class="hero-couple-photo">
         </div>
 
         <div class="hero-text-content">
-          <p class="hero-intro-text" data-i18n="heroGreeting">WE ARE GETTING MARRIED</p>
-          <h1 class="hero-couple-title font-serif">NATTIYA &amp; WUTSAPAT</h1>
-          <div class="hero-couple-thai">โบ (ณัฐฐิญา) &amp; คิม (วุฒศภัทร์)</div>
+          <h1 class="hero-couple-title font-serif">ณัฐฐิญา &amp; วุฒศภัทร์</h1>
+          <div class="hero-couple-nickname">โบ &amp; คิม</div>
 
           <div class="hero-divider-heart">
             <span class="line"></span>
@@ -144,9 +133,10 @@
           </div>
 
           <div class="hero-event-info">
-            <div class="hero-date-highlight">FRIDAY, 20 NOVEMBER 2026</div>
-            <div class="hero-time-highlight">18:00 - 22:00 น.</div>
-            <div class="hero-venue-highlight">ห้องคริสตัลแกรนด์บอลรูม ชั้น 1 โรงแรมคริสตัล หาดใหญ่</div>
+            <div class="hero-date-highlight">วันศุกร์ 20 พฤศจิกายน 2569</div>
+            <div class="hero-time-highlight">18:00 น. - 22:00 น.</div>
+            <div class="hero-venue-room">ห้องคริสตัลแกรนด์บอลรูม ชั้น 1</div>
+            <div class="hero-venue-hotel">โรงแรมคริสตัล หาดใหญ่</div>
           </div>
 
           <div class="hero-hashtag-wrap">
@@ -206,7 +196,7 @@
           </a>
           <a id="btn-apple-cal" href="wedding.ics" target="_blank" class="btn-luxury btn-outline">
             <i class="fa-brands fa-apple"></i>
-            <span data-i18n="btnAppleCalendar">เพิ่มลงใน Apple Calendar (iPhone)</span>
+            <span data-i18n="btnAppleCalendar">บันทึกลง Apple Calendar</span>
           </a>
         </div>
       </div>

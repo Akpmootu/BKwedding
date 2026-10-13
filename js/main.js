@@ -18,43 +18,7 @@
     currentLightboxIndex: 0,
     likes: JSON.parse(localStorage.getItem('bkwedding_likes') || '{}'),
     comments: JSON.parse(localStorage.getItem('bkwedding_photo_comments') || '{}'),
-    wishes: [
-      {
-        name: "เพื่อนสนิทสมัยเรียน",
-        wishes: "ขอให้โบและคิมมีความสุขมากๆ ถือไม้เท้ายอดทองกระบองยอดเพชร รักกันตลอดไปนะ!",
-        date: "2026-10-10"
-      },
-      {
-        name: "พี่ๆ ทีม Top Glove",
-        wishes: "ยินดีด้วยกับคู่รักแห่งปี จากวันแรกที่เจอกันจนถึงวันนี้ ดีใจด้วยจริงๆ จ้า!",
-        date: "2026-10-12"
-      },
-      {
-        name: "ครอบครัวปราศภัย",
-        wishes: "ขออวยพรให้ทั้งสองคนครองคู่กันด้วยความเข้าใจ มีความสุขและความเจริญรุ่งเรือง",
-        date: "2026-10-13"
-      },
-      {
-        name: "พี่สาวที่ทำงาน",
-        wishes: "ยินดีด้วยนะน้องโบ ขอให้ชีวิตคู่มีแต่รอยยิ้ม ความอบอุ่น และเสียงหัวเราะในทุกๆ วันนะจ๊ะ",
-        date: "2026-10-13"
-      },
-      {
-        name: "แก๊งเพื่อน ม.ปลาย",
-        wishes: "Happy Wedding! ขอให้รักกันหวานชื่นเหมือนวันแรกที่จีบกัน มีเบบี๋ไวๆ น้าา",
-        date: "2026-10-13"
-      },
-      {
-        name: "น้องๆ แผนกไอที",
-        wishes: "ดีใจกับพี่คิมและพี่โบมากๆ ครับ เหมาะสมกันที่สุด ขอให้ชีวิตคู่ราบรื่นและเปี่ยมด้วยความสุขครับ",
-        date: "2026-10-13"
-      },
-      {
-        name: "เพื่อนร่วมรุ่นมหาวิทยาลัย",
-        wishes: "ยินดีด้วยมากๆ เลยจ้าคิมโบ ขอให้จับมือกันก้าวผ่านทุกเรื่องราว สร้างครอบครัวที่อบอุ่นตลอดไปนะ",
-        date: "2026-10-13"
-      }
-    ]
+    wishes: []
   };
 
   // ----------------------------------------------------------------------------
@@ -72,7 +36,7 @@
       cdMinutes: "นาที",
       cdEventStarted: "วันนี้คือวันสำคัญของเรา",
       btnGoogleCalendar: "บันทึกลง Google Calendar",
-      btnAppleCalendar: "เพิ่มลงใน Apple Calendar (iPhone)",
+      btnAppleCalendar: "บันทึกลง Apple Calendar",
       btnDownloadIcs: "ดาวน์โหลดปฏิทิน (.ics สำหรับ iPhone)",
       scheduleTitle: "Wedding Schedule",
       scheduleSubtitle: "กำหนดการพิธีมงคลสมรส",
@@ -328,6 +292,7 @@
         <div class="journey-content">
           <div class="journey-date">${item.date}</div>
           <div class="journey-event-title">${item.title}</div>
+          ${item.subtitle ? `<div class="journey-event-subtitle">${escapeHtml(item.subtitle)}</div>` : ''}
         </div>
       </div>
     `).join('');
@@ -955,23 +920,52 @@
   }
 
   // ----------------------------------------------------------------------------
-  // 10. GUESTBOOK
-  // ----------------------------------------------------------------------------
-  // ----------------------------------------------------------------------------
-  // 10. GUESTBOOK (SPEECH BUBBLES WITH RANDOMIZATION & SHUFFLE)
+  // 10. GUESTBOOK (SPEECH BUBBLES FROM GOOGLE SHEET WITH RANDOMIZATION & SHUFFLE)
   // ----------------------------------------------------------------------------
   function initGuestbook() {
-    // Shuffle wishes on page load for randomized display
-    shuffleArray(state.wishes);
     renderWishes();
+    fetchWishesFromSheet();
 
     const shuffleBtn = document.getElementById('btn-shuffle-wishes');
     if (shuffleBtn) {
       shuffleBtn.addEventListener('click', () => {
-        shuffleArray(state.wishes);
-        renderWishes();
-        showToast("สุ่มคำอวยพรเรียบร้อยแล้วค่ะ ✨");
+        if (state.wishes.length > 1) {
+          shuffleArray(state.wishes);
+          renderWishes();
+          showToast("สุ่มคำอวยพรเรียบร้อยแล้วค่ะ ✨");
+        } else if (state.wishes.length === 1) {
+          showToast("มีคำอวยพรในระบบ 1 ข้อความค่ะ ✨");
+        } else {
+          showToast("ยังไม่มีคำอวยพรในระบบค่ะ ✨");
+        }
       });
+    }
+  }
+
+  async function fetchWishesFromSheet() {
+    if (!WEDDING_CONFIG.appsScriptUrl) return;
+    try {
+      const res = await fetch(WEDDING_CONFIG.appsScriptUrl);
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const data = await res.json();
+      if (data && Array.isArray(data.wishes)) {
+        state.wishes = data.wishes
+          .filter(w => w && (w.message || w.wishes) && w.name)
+          .map(w => ({
+            name: w.name || "แขกผู้มีเกียรติ",
+            wishes: (w.message || w.wishes || "").trim(),
+            date: w.timestamp ? w.timestamp.split(' ')[0] : '2026-11-20'
+          }))
+          .filter(w => w.wishes.length > 0);
+
+        if (state.wishes.length > 1) {
+          shuffleArray(state.wishes);
+        }
+        renderWishes();
+      }
+    } catch (err) {
+      console.warn("Could not fetch wishes from Google Sheet:", err);
+      renderWishes();
     }
   }
 
@@ -985,6 +979,17 @@
   function renderWishes() {
     const container = document.getElementById('wishes-bubble-container') || document.getElementById('wishes-carousel-container');
     if (!container) return;
+
+    if (state.wishes.length === 0) {
+      container.innerHTML = `
+        <div class="wishes-empty-card">
+          <div class="empty-icon"><i class="fa-regular fa-heart"></i></div>
+          <p class="empty-title">กำลังโหลดคำอวยพร หรือยังไม่มีข้อความ</p>
+          <p class="empty-sub">ร่วมส่งคำอวยพรให้คู่บ่าวสาวเป็นท่านแรกผ่านแบบฟอร์มด้านล่างได้เลยค่ะ ❤️</p>
+        </div>
+      `;
+      return;
+    }
 
     const pastelThemes = ['theme-rose', 'theme-sage', 'theme-peach', 'theme-lavender', 'theme-sky'];
 

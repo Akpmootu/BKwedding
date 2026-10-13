@@ -96,8 +96,8 @@ const WEDDING_CONFIG = {
     {
       timeTh: "18.00 น.",
       timeEn: "06:00 PM",
-      titleTh: "ฉลองพิธีมงคลสมรส",
-      titleEn: "Wedding Reception",
+      titleTh: "ฉลองพิธีมงคลสมรส (โต๊ะจีน)",
+      titleEn: "Wedding Reception (Chinese Banquet)",
       descTh: "รับประทานอาหารค่ำ ถ่ายภาพเป็นที่ระลึก และเฉลิมฉลองค่ำคืนแห่งความสุข",
       descEn: "Grand celebration with dinner, photo opportunities, and joyful toasts",
       icon: "fa-solid fa-champagne-glasses",
@@ -108,8 +108,9 @@ const WEDDING_CONFIG = {
   // เรื่องราวความรัก (Journey to Marriage)
   loveMilestones: [
     {
-      date: "10 October 2016",
-      title: "First Met at Top Glove Technology",
+      date: "3 October 2016",
+      title: "First Met",
+      subtitle: "at Top Glove Technology",
       descTh: "",
       descEn: "Where our paths first crossed at Top Glove Technology",
       icon: "fa-solid fa-mug-hot"
@@ -117,6 +118,7 @@ const WEDDING_CONFIG = {
     {
       date: "17 October 2021",
       title: "First Date",
+      subtitle: "",
       descTh: "",
       descEn: "Our very first official date filled with smiles and warmth",
       icon: "fa-solid fa-heart"
@@ -124,6 +126,7 @@ const WEDDING_CONFIG = {
     {
       date: "14 February 2026",
       title: "The Proposal",
+      subtitle: "",
       descTh: "",
       descEn: "Valentine's Day proposal - She said 'Yes' to our forever",
       icon: "fa-solid fa-gem"
@@ -131,6 +134,7 @@ const WEDDING_CONFIG = {
     {
       date: "20 November 2026",
       title: "Wedding Day",
+      subtitle: "",
       descTh: "",
       descEn: "The beginning of our new chapter as Mr. & Mrs.",
       icon: "fa-solid fa-dove"
@@ -147,8 +151,8 @@ const WEDDING_CONFIG = {
     hotelEn: "Crystal Hotel Hat Yai",
     addressTh: "4 ซอย 23 ถนนกาญจนวนิช ตำบลคอหงส์ อำเภอหาดใหญ่ จังหวัดสงขลา 90110",
     addressEn: "4 Soi 23, Kanjanavanich Rd, Kho Hong, Hat Yai, Songkhla 90110",
-    googleMapsLink: "https://maps.app.goo.gl/EbyMbPtH28EBHXf1A",
-    embedUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3959.988863615967!2d100.4950302!3d7.0016467!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x304d29b0a701d5df%3A0xe5a3c9be0d35e168!2sCrystal%20Hotel%20Hat%20Yai!5e0!3m2!1sen!2sth!4v1700000000000!5m2!1sen!2sth",
+    googleMapsLink: "https://www.google.com/maps/place/Crystal+Hotel+Hat+Yai+%E0%B9%82%E0%B8%A3%E0%B8%87%E0%B9%80%E0%B9%80%E0%B8%A3%E0%B8%A1%E0%B8%84%E0%B8%A3%E0%B8%B4%E0%B8%AA%E0%B8%95%E0%B8%B1%E0%B8%A5+%E0%B8%AB%E0%B8%B2%E0%B8%94%E0%B9%83%E0%B8%AB%E0%B8%8D%E0%B9%88/@6.991798,100.4853842,397m/data=!3m1!1e3!4m5!3m4!1s0x304d29a94692386f:0xa5b9f7bd88ac793d!8m2!3d6.9917207!4d100.485388",
+    embedUrl: "https://maps.google.com/maps?q=Crystal+Hotel+Hat+Yai+หาดใหญ่&t=&z=16&ie=UTF8&iwloc=&output=embed",
     parkingNoteTh: "มีพื้นที่จอดรถกว้างขวางรองรับแขกผู้มีเกียรติภายในบริเวณโรงแรม",
     parkingNoteEn: "Spacious parking area available inside the hotel premises"
   },
