@@ -158,6 +158,7 @@ img {
   object-position: center 25%;
   transform: scale(1.03);
   animation: gentleCoverZoom 16s ease-in-out infinite alternate;
+  filter: brightness(1.08) contrast(1.04) saturate(1.18);
 }
 
 @keyframes gentleCoverZoom {
@@ -170,11 +171,12 @@ img {
   inset: 0;
   background: linear-gradient(
     180deg,
-    rgba(25, 18, 24, 0.72) 0%,
-    rgba(25, 18, 24, 0.25) 25%,
-    rgba(25, 18, 24, 0.18) 50%,
-    rgba(25, 18, 24, 0.55) 75%,
-    rgba(25, 18, 24, 0.90) 100%
+    rgba(25, 12, 28, 0.42) 0%,
+    rgba(25, 12, 28, 0.15) 22%,
+    rgba(255, 255, 255, 0.02) 42%,
+    rgba(255, 255, 255, 0) 62%,
+    rgba(35, 15, 28, 0.18) 82%,
+    rgba(35, 15, 28, 0.48) 100%
   );
   pointer-events: none;
 }
@@ -206,33 +208,6 @@ img {
   padding-top: 0.4rem;
 }
 
-.envelope-recipient-box {
-  background: rgba(255, 255, 255, 0.96);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1.5px dashed var(--rose-medium);
-  border-radius: 14px;
-  padding: 0.45rem 1.3rem;
-  display: inline-block;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.22);
-}
-
-.envelope-recipient-label {
-  font-size: 0.72rem;
-  color: var(--text-muted);
-  letter-spacing: 2.5px;
-  text-transform: uppercase;
-  font-weight: 600;
-}
-
-.envelope-recipient-name {
-  font-family: var(--font-sans);
-  font-size: 1.15rem;
-  font-weight: 700;
-  color: var(--text-primary);
-  margin-top: 2px;
-}
-
 .envelope-titles-wrap {
   color: #FFFFFF;
   text-shadow: 0 2px 14px rgba(0, 0, 0, 0.85);
@@ -240,12 +215,15 @@ img {
 }
 
 .envelope-sub-intro {
-  font-size: 0.72rem;
-  letter-spacing: 3.5px;
-  color: #FFD8E8;
-  margin-bottom: 0.2rem;
-  font-weight: 600;
-  text-transform: uppercase;
+  font-family: var(--font-serif);
+  font-size: clamp(0.95rem, 3.8vw, 1.22rem);
+  letter-spacing: 0.5px;
+  font-style: italic;
+  color: #FFF2F6;
+  margin-bottom: 0.45rem;
+  font-weight: 500;
+  text-transform: none;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.7);
 }
 
 .envelope-couple-names {
@@ -925,18 +903,22 @@ img {
   border-radius: var(--radius-md);
   border: 1px solid rgba(235, 127, 168, 0.25);
   box-shadow: var(--shadow-sm);
-  padding: 1.2rem 1rem;
+  padding: 1.2rem 0.6rem;
   margin: 0 auto 1.8rem;
   max-width: 380px;
+  box-sizing: border-box;
 }
 
 .countdown-title {
-  font-size: 0.8rem;
-  letter-spacing: 2px;
+  font-family: var(--font-sans);
+  font-size: clamp(0.64rem, 2.7vw, 0.8rem);
+  letter-spacing: 1px;
   text-transform: uppercase;
   color: var(--text-muted);
   margin-bottom: 0.8rem;
-  font-weight: 500;
+  font-weight: 600;
+  white-space: nowrap;
+  text-align: center;
 }
 
 .countdown-grid {
@@ -1074,10 +1056,10 @@ img {
 
 .journey-event-subtitle {
   font-family: var(--font-sans);
-  font-size: 0.92rem;
-  color: var(--rose-deep);
-  font-weight: 500;
-  margin-top: 2px;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-top: 1px;
 }
 
 .journey-desc {

@@ -113,7 +113,7 @@ const WEDDING_CONFIG = {
       subtitle: "at Top Glove Technology",
       descTh: "",
       descEn: "Where our paths first crossed at Top Glove Technology",
-      icon: "fa-solid fa-mug-hot"
+      icon: "fa-solid fa-desktop"
     },
     {
       date: "17 October 2021",
@@ -129,7 +129,7 @@ const WEDDING_CONFIG = {
       subtitle: "",
       descTh: "",
       descEn: "Valentine's Day proposal - She said 'Yes' to our forever",
-      icon: "fa-solid fa-gem"
+      icon: "fa-solid fa-ring"
     },
     {
       date: "20 November 2026",
@@ -137,7 +137,7 @@ const WEDDING_CONFIG = {
       subtitle: "",
       descTh: "",
       descEn: "The beginning of our new chapter as Mr. & Mrs.",
-      icon: "fa-solid fa-dove"
+      icon: "fa-solid fa-champagne-glasses"
     }
   ],
 
